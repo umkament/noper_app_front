@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import postImg from '@/assets/photo4.jpeg'
@@ -11,9 +10,11 @@ import { GrTextWrap } from 'react-icons/gr'
 import s from './user-page.module.scss'
 
 export const UserPage = () => {
-  const [isAuth, setIsAuth] = useState(true)
+  // const [isAuth, setIsAuth] = useState(true)
 
   //console.log(setIsAuth(isAuth))
+
+  const isAuth = true
 
   return (
     <div className={s.mainContainer}>

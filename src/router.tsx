@@ -1,11 +1,4 @@
-import {
-  Navigate,
-  Outlet,
-  RouteObject,
-  RouterProvider,
-  createBrowserRouter,
-  createHashRouter,
-} from 'react-router-dom'
+import { Navigate, Outlet, RouteObject, RouterProvider, createHashRouter } from 'react-router-dom'
 
 import { Layout } from '@/components/layout'
 import { ErrorPage } from '@/pages/error-page'

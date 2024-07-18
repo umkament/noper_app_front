@@ -17,8 +17,10 @@ import s from './layout.module.scss'
 import { Avatar } from '../ui/avatar'
 
 export const Layout = () => {
-  const [userData, setUserData] = useState('1')
+  //const [userData, setUserData] = useState('1')
   const [menuOpen, setMenuOpen] = useState(false)
+
+  const userData = '1'
 
   //console.log(setUserData(userData))
 

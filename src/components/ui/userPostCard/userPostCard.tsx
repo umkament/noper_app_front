@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import ava from '@/assets/avatar.png'
@@ -15,7 +14,8 @@ import { Avatar } from '../avatar'
 import { Button } from '../button'
 
 export const UserPostCard = () => {
-  const [isSave, setIsSave] = useState(() => Math.random() < 0.5)
+  //const [isSave, setIsSave] = useState(() => Math.random() < 0.5)
+  const isSave = () => Math.random() < 0.5
 
   // console.log(setIsSave(isSave))
 
@@ -46,7 +46,7 @@ export const UserPostCard = () => {
               <FaRegEye className={s.eyeIcon} size={24} />
             </Typography>
             <Button className={s.favorite} variant={'icon'}>
-              {isSave ? <BsBalloonHeartFill size={22} /> : <PiHandHeartLight size={22} />}
+              {isSave() ? <BsBalloonHeartFill size={22} /> : <PiHandHeartLight size={22} />}
               22
             </Button>
           </div>

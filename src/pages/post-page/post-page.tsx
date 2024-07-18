@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import ava from '@/assets/avatar.png'
 import postImg from '@/assets/photo1.jpeg'
 import { Avatar } from '@/components/ui/avatar'
@@ -13,7 +11,9 @@ import { PiHandHeartLight } from 'react-icons/pi'
 import s from './post-page.module.scss'
 
 export const PostPage = () => {
-  const [isSave, setIsSave] = useState(() => Math.random() < 0.5)
+  //const [isSave, setIsSave] = useState(() => Math.random() < 0.5)
+
+  const isSave = () => Math.random() < 0.5
 
   //console.log(setIsSave(isSave))
 
@@ -30,7 +30,7 @@ export const PostPage = () => {
             <FaRegEye className={s.eyeIcon} size={24} />
           </Typography>
           <Button className={s.favorite} variant={'icon'}>
-            {isSave ? <BsBalloonHeartFill size={22} /> : <PiHandHeartLight size={22} />}
+            {isSave() ? <BsBalloonHeartFill size={22} /> : <PiHandHeartLight size={22} />}
             22
           </Button>
           <Typography className={s.date}>06.06.2024</Typography>

@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import profileImg from '@/assets/profileimg.png'
 import { GiSkateboard } from 'react-icons/gi'
 import { MdRollerSkating } from 'react-icons/md'
@@ -10,7 +8,9 @@ import { Button } from '../button'
 import { Typography } from '../typography'
 
 export const UserCard = () => {
-  const [random, setRandom] = useState(() => Math.random() < 0.5)
+  //const [random, setRandom] = useState(() => Math.random() < 0.5)
+
+  const random = () => Math.random() < 0.5
 
   //console.log(setRandom(random))
 
@@ -27,7 +27,7 @@ export const UserCard = () => {
           Иван Петров{' '}
         </Typography>
         <Button className={s.discipline} variant={'icon'}>
-          {random ? <GiSkateboard /> : <MdRollerSkating />}
+          {random() ? <GiSkateboard /> : <MdRollerSkating />}
         </Button>
       </div>
     </Button>
