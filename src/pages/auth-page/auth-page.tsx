@@ -1,7 +1,5 @@
 import { Link } from 'react-router-dom'
 
-import URLogo from '@/assets/URLogo.png'
-import logo from '@/assets/logoToLogin.png'
 import toLoginLogo from '@/assets/toLogin.png'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'

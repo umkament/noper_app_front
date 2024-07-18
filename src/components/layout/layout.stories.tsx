@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import { MemoryRouter } from 'react-router-dom'
 
-import { logo } from '@/assets'
+import logo from '@/assets/URLogo.png'
 import { Button } from '@/components/ui/button'
 
 import { Layout } from './'

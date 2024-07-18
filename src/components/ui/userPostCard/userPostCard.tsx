@@ -17,6 +17,8 @@ import { Button } from '../button'
 export const UserPostCard = () => {
   const [isSave, setIsSave] = useState(() => Math.random() < 0.5)
 
+  // console.log(setIsSave(isSave))
+
   return (
     <Card className={s.card}>
       <Link className={s.linkoff} to={'/post'}>

@@ -20,6 +20,8 @@ export const Layout = () => {
   const [userData, setUserData] = useState('1')
   const [menuOpen, setMenuOpen] = useState(false)
 
+  //console.log(setUserData(userData))
+
   const logOutHandler = () => {
     // Имитация выхода из системы
     const fakeLogout = () => new Promise(resolve => setTimeout(resolve, 1000)) // Имитация задержки на 1 секунду

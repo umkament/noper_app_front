@@ -1,4 +1,3 @@
-import { React, useRef } from 'react'
 import { Link } from 'react-router-dom'
 
 import { toLoginLogo } from '@/assets'
@@ -13,7 +12,7 @@ import { MdOutlineAddAPhoto } from 'react-icons/md'
 import s from './editProfile-page.module.scss'
 
 export const EditProfilePage = () => {
-  const inputFileRef: React.MutableRefObject<null> = useRef(null)
+  // const inputFileRef = useRef<HTMLInputElement>(null)
 
   return (
     <div className={s.container}>
@@ -35,7 +34,7 @@ export const EditProfilePage = () => {
         <Input className={s.inputStyle} label={'e-mail'} placeholder={'testmail@gmail.ru'}></Input>
         <div className={s.addAvatarWrap}>
           <img alt={'avatar'} className={s.avatarStyle} src={avatar} />
-          <Button onClick={() => inputFileRef.current.onClick()}>
+          <Button onClick={() => {}}>
             оформить аватар <MdOutlineAddAPhoto />
           </Button>
         </div>

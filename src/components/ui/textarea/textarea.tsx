@@ -22,6 +22,7 @@ const getType = (type: string, showPassword: boolean) => {
   if (type === 'password' && showPassword) {
     return 'text'
   }
+  console.log(getType('123', true))
 
   return type
 }

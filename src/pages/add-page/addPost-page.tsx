@@ -13,7 +13,7 @@ import s from './addPost-page.module.scss'
 
 export const AddPostPage = () => {
   const uniqueId = useMemo(() => uuidv4(), [])
-  const inputFileRef = useRef(null)
+  const inputFileRef = useRef<HTMLInputElement>(null)
   const [text, setText] = useState('')
   const onChange = (value: string) => {
     setText(value)
