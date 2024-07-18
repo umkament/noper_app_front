@@ -4,6 +4,7 @@ import {
   RouteObject,
   RouterProvider,
   createBrowserRouter,
+  createHashRouter,
 } from 'react-router-dom'
 
 import { Layout } from '@/components/layout'
@@ -36,7 +37,7 @@ const publicRoutes: RouteObject[] = [
   { element: <LoginPage />, path: '/logout' },
   { element: <AuthPage />, path: '/auth' },
 ]
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     children: [
       ...publicRoutes,

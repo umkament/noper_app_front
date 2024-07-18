@@ -13,7 +13,7 @@ import s from './user-page.module.scss'
 export const UserPage = () => {
   const [isAuth, setIsAuth] = useState(true)
 
-  console.log(setIsAuth(isAuth))
+  //console.log(setIsAuth(isAuth))
 
   return (
     <div className={s.mainContainer}>

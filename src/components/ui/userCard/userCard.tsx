@@ -12,7 +12,7 @@ import { Typography } from '../typography'
 export const UserCard = () => {
   const [random, setRandom] = useState(() => Math.random() < 0.5)
 
-  console.log(setRandom(random))
+  //console.log(setRandom(random))
 
   return (
     <Button className={s.buttonWrap} variant={'tertiary'}>

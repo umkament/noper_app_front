@@ -15,7 +15,7 @@ import s from './post-page.module.scss'
 export const PostPage = () => {
   const [isSave, setIsSave] = useState(() => Math.random() < 0.5)
 
-  console.log(setIsSave(isSave))
+  //console.log(setIsSave(isSave))
 
   return (
     <div className={s.mainContainer}>
