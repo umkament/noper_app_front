@@ -1,0 +1,62 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+
+  width: 100%;
+  max-width: 900px;
+  height: auto;
+  margin: auto;
+  margin-bottom: 6rem;
+  padding-top: 120px;
+  padding-bottom: 1rem;
+
+  background: linear-gradient(60deg, var(--color-dark-900) 5%, var(--color-dark-700) 100%);
+  border-radius: 2%;
+  box-shadow: 10px 13px 10px var(--color-dark-900);
+}
+
+.illustrator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 90%;
+  height: 250px;
+  margin: auto;
+
+  border: 0.1rem solid var(--color-dark-100);
+  border-radius: 5px;
+
+  .buttonStyle {
+    margin: auto;
+  }
+}
+
+.title,
+.tags {
+  width: 90%;
+}
+
+.editor {
+  width: 90%;
+
+  :global {
+    .cm-s-easymde {
+      font-size: 22px;
+      background: linear-gradient(60deg, var(--color-light-100) 5%, #efefef 150%);
+      border: 0;
+      border-radius: 0 0 5px 5px;
+    }
+
+    .editor-toolbar {
+      color: black;
+      background: linear-gradient(90deg, #efefef 55%, var(--color-accent-500) 70%);
+
+      //background-color: #efefef;
+      border: 0;
+      border-radius: 5px 5px 0 0;
+    }
+  }
+}

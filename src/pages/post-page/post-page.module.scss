@@ -1,0 +1,71 @@
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  max-width: 800px;
+  margin: auto;
+  margin-bottom: 6rem;
+  padding-top: 110px;
+}
+
+.imgStyle {
+  max-width: 100%;
+  border-radius: 0.3%;
+}
+
+.infoText {
+  display: flex;
+  justify-content: space-between;
+
+  .view,
+  .date {
+    font-size: 1rem;
+    color: var(--color-light-900);
+  }
+}
+
+.textWrap {
+  background: linear-gradient(var(--color-dark-700) 50%, var(--color-accent-700) 250%);
+  border-radius: 0 0 0.3% 0.3%;
+  box-shadow: 0 7px 15px var(--color-accent-700);
+}
+
+.text {
+  width: 90%;
+  margin: 0 auto;
+
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1.5rem;
+  color: var(--color-light-900) !important;
+  text-align: justify;
+}
+
+.commentWrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  width: 100%;
+
+  background: linear-gradient(var(--color-dark-700) 50%, var(--color-accent-700) 250%);
+  border-radius: 0 0 0.3% 0.3%;
+  box-shadow: 0 7px 15px var(--color-dark-900);
+}
+
+.avaInput {
+  display: flex;
+  gap: 1rem;
+  margin: 2rem;
+}
+
+.comment {
+  display: flex;
+  gap: 1rem;
+  margin: 0.4rem;
+  color: var(--color-light-900);
+}
