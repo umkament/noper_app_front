@@ -4,7 +4,7 @@ import { Layout } from '@/components/layout'
 import { ErrorPage } from '@/pages/error-page'
 import { MainPage } from '@/pages/main-page'
 
-import { AddPostPage } from './pages/add-page'
+import { AddPostPage } from './pages/addPost-page'
 import { AuthPage } from './pages/auth-page'
 import { EditProfilePage } from './pages/editProfile-page'
 import { LoginPage } from './pages/login-page'
