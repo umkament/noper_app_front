@@ -10,12 +10,12 @@ export const baseApi = createApi({
   }),
   endpoints: builder => {
     return {
-      getDecks: builder.query<any, void>({
-        query: () => `v1/decks`,
+      getPosts: builder.query<any, void>({
+        query: () => `/posts`,
       }),
     }
   },
   reducerPath: 'baseApi',
 })
 
-export const { useGetDecksQuery } = baseApi
+export const { useGetPostsQuery } = baseApi
