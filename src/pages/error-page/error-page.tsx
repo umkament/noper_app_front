@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { errorImg } from '@/assets'
 import { Button } from '@/components/ui/button'
 import { Typography } from '@/components/ui/typography'
-import { useGetPostsQuery } from '@/services/posts-api'
 
 import s from './error-page.module.scss'
 export const ErrorPage = () => {

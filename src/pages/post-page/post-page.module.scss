@@ -26,17 +26,39 @@
     font-size: 1rem;
     color: var(--color-light-900);
   }
+
+  .view {
+    display: flex;
+    align-items: center;
+  }
+
+  .viewsCount {
+    margin-right: 0.2rem;
+  }
+
+  .eyeIcon {
+    margin-bottom: 0.5rem;
+  }
 }
 
 .textWrap {
+  width: 100%;
   background: linear-gradient(var(--color-dark-700) 50%, var(--color-accent-700) 250%);
   border-radius: 0 0 0.3% 0.3%;
-  box-shadow: 0 7px 15px var(--color-accent-700);
+  box-shadow: 0 6px 11px var(--color-accent-700);
+}
+
+.title {
+  width: 90%;
+  margin: 0.6rem;
+  color: var(--color-light-900) !important;
+  text-align: center;
 }
 
 .text {
-  width: 90%;
+  width: 93%;
   margin: 0 auto;
+  margin-bottom: 0.6rem;
 
   font-size: 1.2rem;
   font-weight: 500;
@@ -66,6 +88,9 @@
 .comment {
   display: flex;
   gap: 1rem;
-  margin: 0.4rem;
+  align-items: center;
+
+  margin: 0.5rem 1rem;
+
   color: var(--color-light-900);
 }

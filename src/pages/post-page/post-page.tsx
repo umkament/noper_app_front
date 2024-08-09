@@ -1,9 +1,12 @@
+import React from 'react'
+import { useParams } from 'react-router-dom'
+
 import ava from '@/assets/avatar.png'
-import postImg from '@/assets/photo1.jpeg'
 import { Avatar } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Typography } from '@/components/ui/typography'
+import { PostInterface, useGetPostQuery } from '@/services/posts'
 import { BsBalloonHeartFill } from 'react-icons/bs'
 import { FaRegEye } from 'react-icons/fa6'
 import { PiHandHeartLight } from 'react-icons/pi'
@@ -11,49 +14,58 @@ import { PiHandHeartLight } from 'react-icons/pi'
 import s from './post-page.module.scss'
 
 export const PostPage = () => {
-  //const [isSave, setIsSave] = useState(() => Math.random() < 0.5)
+  const { postId } = useParams<{ postId: string }>()
+  const { data: post, error, isLoading } = useGetPostQuery(postId)
 
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
+  if (error) {
+    return <div>Error: {JSON.stringify(error)}</div>
+  }
+
+  return post ? <Post post={post} /> : <Typography variant={'h2'}>Post not found</Typography>
+}
+
+interface PostProps {
+  post: PostInterface
+}
+
+export const Post: React.FC<PostProps> = ({ post }) => {
   const isSave = () => Math.random() < 0.5
-
-  //console.log(setIsSave(isSave))
 
   return (
     <div className={s.mainContainer}>
       <div className={s.photoWrap}>
-        <img alt={'postImg'} className={s.imgStyle} src={postImg} />
+        <img alt={'postImg'} className={s.imgStyle} src={post.imageUrl} />
         <div className={s.infoText}>
           <Button variant={'icon'}>
-            <Avatar avatar={ava} />
+            <Avatar avatar={post.user.avatarUrl} />
           </Button>
           <Typography className={s.view}>
-            911
-            <FaRegEye className={s.eyeIcon} size={24} />
+            <span className={s.viewsCount}>{post.viewsCount}</span>
+            <FaRegEye className={s.eyeIcon} size={21} />
           </Typography>
           <Button className={s.favorite} variant={'icon'}>
             {isSave() ? <BsBalloonHeartFill size={22} /> : <PiHandHeartLight size={22} />}
-            22
+            {post.likes}
           </Button>
-          <Typography className={s.date}>06.06.2024</Typography>
+          <Typography className={s.date}>
+            {new Date(post.createdAt).toLocaleDateString()}
+          </Typography>
         </div>
       </div>
       <div className={s.textWrap}>
+        <Typography className={s.title} variant={'h2'}>
+          {post.title}
+        </Typography>
         <Typography className={s.text} variant={'body1'}>
-          Катание на роликах комплексно развивает здоровье: разные группы мышц, дарит хорошее
-          настроение, увеличивает физическую активность, координацию, укрепляет вестибулярный
-          аппарат, сердечно-сосудистую систему, в целом, катаясь на роликах по паркам, мы много
-          дышим и двигаемся, что любому из нас на пользу! Не все способны и готовы к правильному
-          питанию, но каждый может купить ролики, чтобы сменить привычную нагрузку на роликовое
-          катание. Катаясь на роликах, человек задействует 90% тела, что приносит большую пользу
-          здоровью. Пожалуй, конкурентом роликам может стать лишь езда на лошади. Кататься на лошади
-          по городу доступно не всем, а вот кататься на роликах доступно любому из нас! При катании
-          на роликах активно работает нижняя часть тела: икры, мышцы голени и бедер. На практике
-          такая мышечная работа сделает вас выносливее и красивее: рельеф ног и задней поверхности
-          бедра подтянется, и, если за вами погонится страус, у вас будет шанс от него сбежать 😂
+          {post.text}
         </Typography>
       </div>
       <div className={s.commentWrap}>
         <div className={s.avaInput}>
-          <Avatar avatar={ava} />
+          <Avatar avatar={post.user.avatarUrl} />
           <Input />
         </div>
         <Typography className={s.comment} variant={'subtitle1'}>

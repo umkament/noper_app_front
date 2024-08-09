@@ -1,4 +1,7 @@
-import profileImg from '@/assets/profileimg.png'
+import React from 'react'
+import { Link, useParams } from 'react-router-dom'
+
+import { UserInterface } from '@/services/users'
 import { GiSkateboard } from 'react-icons/gi'
 import { MdRollerSkating } from 'react-icons/md'
 
@@ -7,24 +10,24 @@ import s from './userCard.module.scss'
 import { Button } from '../button'
 import { Typography } from '../typography'
 
-export const UserCard = () => {
-  //const [random, setRandom] = useState(() => Math.random() < 0.5)
+type UserPostCardProps = {
+  user: UserInterface
+}
 
+export const UserCard: React.FC<UserPostCardProps> = ({ user }) => {
   const random = () => Math.random() < 0.5
 
-  //console.log(setRandom(random))
-
   return (
-    <Button className={s.buttonWrap} variant={'tertiary'}>
+    <Button as={Link} className={s.buttonWrap} to={`/user/${user._id}`} variant={'tertiary'}>
       <div className={s.imageWrap}>
-        <img className={s.imgprof} src={profileImg} />
+        <img className={s.imgprof} src={user.avatarUrl} />
       </div>
       <div className={s.textContent}>
         <Typography className={s.userName} variant={'h3'}>
-          Rollerman_1221
+          {user.username}
         </Typography>
         <Typography className={s.name} variant={'subtitle1'}>
-          Иван Петров{' '}
+          {`${user.name} ${user.surname}`}
         </Typography>
         <Button className={s.discipline} variant={'icon'}>
           {random() ? <GiSkateboard /> : <MdRollerSkating />}

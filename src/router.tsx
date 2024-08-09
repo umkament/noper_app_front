@@ -10,7 +10,7 @@ import { EditProfilePage } from './pages/editProfile-page'
 import { LoginPage } from './pages/login-page'
 import { PostPage } from './pages/post-page'
 import { UserPage } from './pages/user-page'
-import { UsersPage } from './pages/users-page'
+import { UsersListPage } from './pages/users-page'
 
 const privateRoutes: RouteObject[] = [
   //{ element: <Layout />, path: '/' },
@@ -24,9 +24,9 @@ const publicRoutes: RouteObject[] = [
   { element: <div> cardPage</div>, path: '/card/:id' },
   { element: <ErrorPage />, path: '/error' },
   { element: <MainPage />, path: '/' },
-  { element: <UsersPage />, path: '/users' },
-  { element: <PostPage />, path: '/post' },
-  { element: <UserPage />, path: '/user' },
+  { element: <UsersListPage />, path: '/users' },
+  { element: <PostPage />, path: '/post/:postId' },
+  { element: <UserPage />, path: '/user/:userId' },
   { element: <LoginPage />, path: '/logout' },
   { element: <AuthPage />, path: '/auth' },
 ]

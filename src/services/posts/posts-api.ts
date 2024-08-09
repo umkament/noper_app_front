@@ -12,6 +12,9 @@ export const postsApi = createApi({
   }),
   endpoints: builder => {
     return {
+      getPost: builder.query<PostInterface, string>({
+        query: postId => `/post/${postId}`,
+      }),
       getPosts: builder.query<PostInterface[], void>({
         query: () => `/posts`,
       }),
@@ -20,4 +23,4 @@ export const postsApi = createApi({
   reducerPath: 'postsApi',
 })
 
-export const { useGetPostsQuery } = postsApi
+export const { useGetPostQuery, useGetPostsQuery } = postsApi

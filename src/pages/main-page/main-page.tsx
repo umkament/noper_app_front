@@ -1,25 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
 import { UserPostCard } from '@/components/ui/userPostCard'
-import { fetchPosts } from '@/services/api'
 import { useGetPostsQuery } from '@/services/posts/posts-api'
 
 import s from './main-page.module.scss'
-
-export interface Post {
-  _id: string
-  createdAt: string
-  imageUrl: string
-  likes: number
-  text: string
-  title: string
-  user: {
-    _id: string
-    avatarUrl: string
-    username: string
-  }
-  viewsCount: number
-}
 
 // export const MainPage: React.FC = () => {
 //   const [posts, setPosts] = useState<Post[]>([])

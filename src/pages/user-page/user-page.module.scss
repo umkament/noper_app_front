@@ -64,16 +64,19 @@
 }
 
 .description {
-  margin-top: 6rem;
+  margin-top: 3rem;
+  padding: 0.8rem;
 
   font-size: 1.2rem;
   text-align: center;
 
-  // color: var(--color-dark-900);
-
-  background: linear-gradient(40deg, var(--color-dark-100) 20%, var(--color-dark-900) 113%);
-  border-radius: 0.8%;
+  background: linear-gradient(40deg, rgb(128 128 128 / 10%) 20%, rgb(0 0 0 / 50%) 113%);
+  border-radius: 5px;
   box-shadow: 0 4px 10px 6px var(--color-dark-500);
+}
+
+.description.empty {
+  padding: 0;
 }
 
 .buttonStyle {
@@ -86,15 +89,27 @@
   grid-template-columns: repeat(3, 1fr);
 
   max-width: 800px;
+  padding: 0.5rem;
 
   background: linear-gradient(60deg, var(--color-dark-500) 50%, var(--color-dark-700) 93%);
-  border-radius: 0.8%;
+  border-radius: 3px;
   box-shadow: 5px 13px 10px var(--color-dark-900);
 }
 
 .postImg {
   width: 100%;
   height: 350px;
+
   object-fit: cover;
   border-radius: 0.8%;
+  box-shadow: -3px -3px 5px var(--color-dark-100);
+
+  transition:
+    transform 0.4s,
+    border 0.4s; /* Добавляем плавный переход для трансформации и обводки */
+}
+
+.postImg:hover {
+  transform: scale(1.04); /* Увеличиваем изображение на 5% */
+  border: 1px solid var(--color-accent-900); /* Добавляем обводку */
 }
