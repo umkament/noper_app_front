@@ -99,7 +99,7 @@ export const Layout = () => {
                   </Button>
                 </DropDownItem>
                 <DropDownItem>
-                  <Button as={Link} className={s.link} onClick={logOutHandler} to={'/logout'}>
+                  <Button as={Link} className={s.link} onClick={logOutHandler} to={'/login'}>
                     выйти
                   </Button>
                 </DropDownItem>

@@ -5,10 +5,10 @@ import { ErrorPage } from '@/pages/error-page'
 import { MainPage } from '@/pages/main-page'
 
 import { AddPostPage } from './pages/addPost-page'
-import { AuthPage } from './pages/auth-page'
 import { EditProfilePage } from './pages/editProfile-page'
-import { LoginPage } from './pages/login-page'
 import { PostPage } from './pages/post-page'
+import { SignInPage } from './pages/signIn-page'
+import { SignUpPage } from './pages/signUp-page'
 import { UserPage } from './pages/user-page'
 import { UsersListPage } from './pages/users-page'
 
@@ -19,16 +19,14 @@ const privateRoutes: RouteObject[] = [
   { element: <EditProfilePage />, path: '/edit-profile' },
 ]
 const publicRoutes: RouteObject[] = [
-  { element: <div>loginPage</div>, path: '/login' },
   { element: <div> forgotPasswordPage</div>, path: '/forgot-password' },
-  { element: <div> cardPage</div>, path: '/card/:id' },
   { element: <ErrorPage />, path: '/error' },
   { element: <MainPage />, path: '/' },
   { element: <UsersListPage />, path: '/users' },
   { element: <PostPage />, path: '/post/:postId' },
   { element: <UserPage />, path: '/user/:userId' },
-  { element: <LoginPage />, path: '/logout' },
-  { element: <AuthPage />, path: '/auth' },
+  { element: <SignInPage />, path: '/login' },
+  { element: <SignUpPage />, path: '/auth/register' },
 ]
 const router = createHashRouter([
   {

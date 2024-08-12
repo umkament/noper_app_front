@@ -6,9 +6,9 @@ import { Input } from '@/components/ui/input'
 import { Typography } from '@/components/ui/typography'
 import { LiaHandPointer } from 'react-icons/lia'
 
-import s from './login-page.module.scss'
+import s from './signIn-page.module.scss'
 
-export const LoginPage = () => {
+export const SignInPage = () => {
   return (
     <div className={s.container}>
       <div className={s.card}>
@@ -32,7 +32,7 @@ export const LoginPage = () => {
         <Typography className={s.text} variant={'large'}>
           у вас все еще нет аккаунта?
         </Typography>
-        <Button as={Link} className={s.btnStyle} to={'/auth'} variant={'link'}>
+        <Button as={Link} className={s.btnStyle} to={'/auth/register'} variant={'link'}>
           создать
         </Button>
         <LiaHandPointer className={s.pointer} size={25} />
