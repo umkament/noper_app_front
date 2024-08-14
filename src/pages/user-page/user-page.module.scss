@@ -50,7 +50,8 @@
 
 .username,
 .name,
-.description {
+.description,
+.text {
   color: var(--color-light-900);
 }
 
@@ -96,6 +97,11 @@
   box-shadow: 5px 13px 10px var(--color-dark-900);
 }
 
+.postsBlock.empty {
+  grid-template-columns: 1fr;
+  justify-items: center;
+}
+
 .postImg {
   width: 100%;
   height: 350px;
@@ -112,4 +118,9 @@
 .postImg:hover {
   transform: scale(1.04); /* Увеличиваем изображение на 5% */
   border: 1px solid var(--color-accent-900); /* Добавляем обводку */
+}
+
+.text {
+  width: 100%;
+  margin: auto;
 }

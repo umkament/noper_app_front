@@ -20,7 +20,10 @@ export const UserCard: React.FC<UserPostCardProps> = ({ user }) => {
   return (
     <Button as={Link} className={s.buttonWrap} to={`/user/${user._id}`} variant={'tertiary'}>
       <div className={s.imageWrap}>
-        <img className={s.imgprof} src={user.avatarUrl} />
+        <img
+          className={s.imgprof}
+          src={user.avatarUrl || `https://robohash.org/${user.username}.png`}
+        />
       </div>
       <div className={s.textContent}>
         <Typography className={s.userName} variant={'h3'}>

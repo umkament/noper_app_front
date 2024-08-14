@@ -7,6 +7,7 @@ export interface UserInterface {
   name: string
   passwordHash: string
   surname: string
+  token: string
   updatedAt: string
   username: string
 }

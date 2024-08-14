@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
 import postImg from '@/assets/photo4.jpeg'
 import { Button } from '@/components/ui/button'
 import { Typography } from '@/components/ui/typography'
+import { useAuthMeQuery } from '@/services/auth'
 import { PostInterface } from '@/services/posts'
 import { UserInterface, useGetUserPostsQuery, useGetUserQuery } from '@/services/users'
 import { FaRegEdit } from 'react-icons/fa'
@@ -16,10 +17,18 @@ export const UserPage = () => {
 
   const { data: user, error: userError, isLoading: isUserLoading } = useGetUserQuery(userId || '')
   const {
-    data: posts,
+    data: posts = [],
     error: postsError,
     isLoading: isPostsLoading,
   } = useGetUserPostsQuery(userId || '')
+  const { data: currentUser } = useAuthMeQuery()
+
+  const isCurrentUser = currentUser?._id === userId
+
+  useEffect(() => {
+    console.log('User Data:', user)
+    console.log('Posts Data:', posts)
+  }, [user, posts])
 
   if (!userId) {
     return <div>Error: User ID is missing</div>
@@ -37,25 +46,30 @@ export const UserPage = () => {
   }
 
   return user ? (
-    <UserPageContent posts={posts || []} user={user} />
+    <UserPageContent isCurrentUser={isCurrentUser} posts={posts || []} user={user} />
   ) : (
     <Typography variant={'h2'}>User not found</Typography>
   )
 }
 
 interface UserProps {
+  isCurrentUser: boolean
   posts: PostInterface[]
   user: UserInterface
 }
 
-export const UserPageContent: React.FC<UserProps> = ({ posts, user }) => {
-  const isAuth = true
+export const UserPageContent: React.FC<UserProps> = ({ isCurrentUser, posts, user }) => {
+  const postsBlockClass = posts.length === 0 ? `${s.postsBlock} ${s.empty}` : s.postsBlock
 
   return (
     <div className={s.mainContainer}>
       <div className={s.infoBlock}>
         <div className={s.imgWrap}>
-          <img alt={'postImg'} className={s.imgStyle} src={user.avatarUrl} />
+          <img
+            alt={'postImg'}
+            className={s.imgStyle}
+            src={user.avatarUrl || `https://robohash.org/${user.username}.png`}
+          />
         </div>
         <div className={s.textInfo}>
           <Typography className={s.username} variant={'caption'}>
@@ -69,7 +83,7 @@ export const UserPageContent: React.FC<UserProps> = ({ posts, user }) => {
             {user.description}
           </Typography>
           <div className={s.buttonStyle}>
-            {isAuth ? (
+            {isCurrentUser ? (
               <Button as={Link} to={'/edit-profile'} variant={'tertiary'}>
                 редактировать профиль <FaRegEdit />
               </Button>
@@ -79,12 +93,16 @@ export const UserPageContent: React.FC<UserProps> = ({ posts, user }) => {
           </div>
         </div>
       </div>
-      <Button as={Link} to={'/add-post'}>
-        добавить статью
-        <GrTextWrap />
-      </Button>
-      <div className={s.postsBlock}>
-        {posts.length > 0 ? (
+      {isCurrentUser ? (
+        <Button as={Link} to={'/add-post'}>
+          добавить статью
+          <GrTextWrap />
+        </Button>
+      ) : (
+        ''
+      )}
+      <div className={s.postsBlockClass}>
+        {posts && posts.length > 0 ? (
           posts.map(post => (
             <Link key={post._id} to={`/post/${post._id}`}>
               <img
@@ -96,7 +114,9 @@ export const UserPageContent: React.FC<UserProps> = ({ posts, user }) => {
             </Link>
           ))
         ) : (
-          <Typography variant={'body1'}>у пользователя пока нет статей</Typography>
+          <Typography className={s.text} variant={'h3'}>
+            пока нет опубликованных статей
+          </Typography>
         )}
       </div>
     </div>

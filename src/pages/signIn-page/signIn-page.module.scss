@@ -28,6 +28,13 @@
   box-shadow: 5px 13px 10px var(--color-dark-900);
 }
 
+.formWrapper {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
 .logo {
   width: 60%;
   border-radius: 1%;
@@ -48,7 +55,7 @@
 
 .btnStyle {
   width: 40%;
-  margin-top: 0.6rem;
+  margin-top: 1rem;
 }
 
 .pointer {

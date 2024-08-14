@@ -26,3 +26,10 @@ export const signUpSchema = z
   })
 
 export type SignUpFormSchema = z.infer<typeof signUpSchema>
+
+export const signInSchema = z.object({
+  email: z.string().email({ message: 'Неверный формат e-mail' }),
+  password: z.string().min(5, { message: 'пароль должен содержать не менее 5 символов' }),
+})
+
+export type SignInFormSchema = z.infer<typeof signInSchema>

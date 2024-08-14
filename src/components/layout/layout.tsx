@@ -8,6 +8,7 @@ import { AvatarWithName } from '@/components/ui/avatar/avatarWithName'
 import { Button } from '@/components/ui/button'
 import { DropDownItem, DropDownMenu } from '@/components/ui/dropDownMenu'
 import { Header } from '@/components/ui/header'
+import { useAuthMeQuery } from '@/services/auth'
 import { FaPeopleRobbery } from 'react-icons/fa6'
 import { GiNewspaper, GiRollerSkate } from 'react-icons/gi'
 import { GoInfo } from 'react-icons/go'
@@ -20,7 +21,7 @@ export const Layout = () => {
   //const [userData, setUserData] = useState('1')
   const [menuOpen, setMenuOpen] = useState(false)
 
-  const userData = '1'
+  const { data: userData, isLoading, refetch } = useAuthMeQuery()
 
   //console.log(setUserData(userData))
 
@@ -35,9 +36,14 @@ export const Layout = () => {
       console.log(notification)
       //toast.success(notification, successOptions); // Вызываем уведомление (закомментировано для замены на console.log)
     })
+    refetch()
   }
   const menuChangeHandler = (open: boolean) => {
     setMenuOpen(open)
+  }
+
+  if (isLoading) {
+    return <div>Loading...</div>
   }
 
   return (
@@ -90,12 +96,22 @@ export const Layout = () => {
               aline={'end'}
               isMenuOpen={menuOpen}
               onChange={menuChangeHandler}
-              trigger={<AvatarWithName avatar={avatar} name={'umkament'} />}
+              trigger={
+                <AvatarWithName
+                  avatar={userData?.avatarUrl || `https://robohash.org/${userData.username}.png`}
+                  name={userData.username}
+                />
+              }
             >
               <>
                 <DropDownItem>
-                  <Button as={Link} to={'/my-profile'}>
-                    моя страница <Avatar avatar={avatar} />
+                  <Button as={Link} to={`/user/${userData._id}`}>
+                    моя страница{' '}
+                    <Avatar
+                      avatar={
+                        userData?.avatarUrl || `https://robohash.org/${userData.username}.png`
+                      }
+                    />
                   </Button>
                 </DropDownItem>
                 <DropDownItem>

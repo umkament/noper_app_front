@@ -12,12 +12,6 @@ import { SignUpPage } from './pages/signUp-page'
 import { UserPage } from './pages/user-page'
 import { UsersListPage } from './pages/users-page'
 
-const privateRoutes: RouteObject[] = [
-  //{ element: <Layout />, path: '/' },
-  { element: <div> ProfilePage</div>, path: '/my-profile' },
-  { element: <AddPostPage />, path: '/add-post' },
-  { element: <EditProfilePage />, path: '/edit-profile' },
-]
 const publicRoutes: RouteObject[] = [
   { element: <div> forgotPasswordPage</div>, path: '/forgot-password' },
   { element: <ErrorPage />, path: '/error' },
@@ -28,6 +22,12 @@ const publicRoutes: RouteObject[] = [
   { element: <SignInPage />, path: '/login' },
   { element: <SignUpPage />, path: '/auth/register' },
 ]
+const privateRoutes: RouteObject[] = [
+  { element: <div> ProfilePage</div>, path: '/my-profile' },
+  { element: <AddPostPage />, path: '/add-post' },
+  { element: <EditProfilePage />, path: '/edit-profile' },
+]
+
 const router = createHashRouter([
   {
     children: [
@@ -47,7 +47,7 @@ export const Router = () => {
 }
 
 function PrivateRoutes() {
-  const isAuthenticated = true
+  const isAuthenticated = !!localStorage.getItem('token')
 
   return isAuthenticated ? <Outlet /> : <Navigate to={'/login'} />
 }
