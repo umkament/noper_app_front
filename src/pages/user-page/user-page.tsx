@@ -101,7 +101,7 @@ export const UserPageContent: React.FC<UserProps> = ({ isCurrentUser, posts, use
       ) : (
         ''
       )}
-      <div className={s.postsBlockClass}>
+      <div className={postsBlockClass}>
         {posts && posts.length > 0 ? (
           posts.map(post => (
             <Link key={post._id} to={`/post/${post._id}`}>

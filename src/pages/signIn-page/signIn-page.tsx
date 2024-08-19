@@ -1,3 +1,4 @@
+import React from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 
@@ -14,6 +15,7 @@ import s from './signIn-page.module.scss'
 
 export const SignInPage = () => {
   const [loginUser, { isLoading }] = useLoginUserMutation()
+
   const {
     control,
     formState: { errors },
@@ -26,13 +28,12 @@ export const SignInPage = () => {
     try {
       const response = await loginUser(data).unwrap()
 
-      // Сохранение токена
-      localStorage.setItem('token', response.token)
+      //fetchUserData()
 
-      // Перенаправление пользователя
       navigate(`/user/${response._id}`)
     } catch (err: any) {
-      if (err.status === 401) {
+      if (err.status === 404) {
+        setError('email', { message: ' ' })
         setError('password', {
           message: 'Неверный e-mail или пароль',
         })
@@ -50,7 +51,7 @@ export const SignInPage = () => {
         <Typography className={s.text} variant={'large'}>
           вход в аккаунт
         </Typography>
-        <form className={s.formWrapper} onSubmit={handleSubmit(onSubmit)}>
+        <form className={s.formWrapper} method={'POST'} onSubmit={handleSubmit(onSubmit)}>
           <ControlledInput
             className={s.inputStyle}
             control={control}
@@ -70,17 +71,19 @@ export const SignInPage = () => {
             placeholder={'надеемся, вы не забыли пароль'}
             type={'password'}
           ></ControlledInput>
-          <Button className={s.btnStyle} type={'submit'}>
+          <Button className={s.btnStyle} disabled={isLoading} type={'submit'}>
             войти
           </Button>
         </form>
         <Typography className={s.text} variant={'large'}>
           у вас все еще нет аккаунта?
         </Typography>
-        <Button as={Link} className={s.btnStyle} to={'/auth/register'} variant={'link'}>
-          создать
-        </Button>
-        <LiaHandPointer className={s.pointer} size={25} />
+        <div className={s.exitWrap}>
+          <Button as={Link} className={s.btnStyle} to={'/auth/register'} variant={'link'}>
+            создать
+          </Button>
+          <LiaHandPointer className={s.pointer} size={25} />
+        </div>
       </div>
     </div>
   )

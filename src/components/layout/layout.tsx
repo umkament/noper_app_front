@@ -1,6 +1,5 @@
-//добавить данные из редакс useAuthMeQuery и т д
-import { useState } from 'react'
-import { Link, Outlet } from 'react-router-dom'
+import { useCallback, useState } from 'react'
+import { Link, Outlet, useNavigate } from 'react-router-dom'
 
 import { avatar, logoUR } from '@/assets'
 import URLogo from '@/assets/URLogo.png'
@@ -8,7 +7,7 @@ import { AvatarWithName } from '@/components/ui/avatar/avatarWithName'
 import { Button } from '@/components/ui/button'
 import { DropDownItem, DropDownMenu } from '@/components/ui/dropDownMenu'
 import { Header } from '@/components/ui/header'
-import { useAuthMeQuery } from '@/services/auth'
+import { useAuthMeQuery, useLogoutUserMutation } from '@/services/auth'
 import { FaPeopleRobbery } from 'react-icons/fa6'
 import { GiNewspaper, GiRollerSkate } from 'react-icons/gi'
 import { GoInfo } from 'react-icons/go'
@@ -18,26 +17,21 @@ import s from './layout.module.scss'
 import { Avatar } from '../ui/avatar'
 
 export const Layout = () => {
-  //const [userData, setUserData] = useState('1')
   const [menuOpen, setMenuOpen] = useState(false)
 
-  const { data: userData, isLoading, refetch } = useAuthMeQuery()
+  const { data: userData, isLoading } = useAuthMeQuery()
+  const [logoutUser] = useLogoutUserMutation()
+  const navigate = useNavigate()
 
-  //console.log(setUserData(userData))
+  const logOutHandler = useCallback(async () => {
+    try {
+      await logoutUser().unwrap()
 
-  const logOutHandler = () => {
-    // Имитация выхода из системы
-    const fakeLogout = () => new Promise(resolve => setTimeout(resolve, 1000)) // Имитация задержки на 1 секунду
-
-    fakeLogout().then(() => {
-      const notification = 'Successfully logged out'
-
-      // Заменяем вывод уведомления на простой console.log, так как мы не имеем реальных данных о пользователе
-      console.log(notification)
-      //toast.success(notification, successOptions); // Вызываем уведомление (закомментировано для замены на console.log)
-    })
-    refetch()
-  }
+      navigate('/auth/login')
+    } catch (error) {
+      console.error('Ошибка при выходе пользователя из аккаунта', error)
+    }
+  }, [logoutUser])
   const menuChangeHandler = (open: boolean) => {
     setMenuOpen(open)
   }
@@ -115,14 +109,14 @@ export const Layout = () => {
                   </Button>
                 </DropDownItem>
                 <DropDownItem>
-                  <Button as={Link} className={s.link} onClick={logOutHandler} to={'/login'}>
+                  <Button as={Link} className={s.link} onClick={logOutHandler} to={'/auth/login'}>
                     выйти
                   </Button>
                 </DropDownItem>
               </>
             </DropDownMenu>
           ) : (
-            <Button as={Link} to={'/login'} variant={'primary'}>
+            <Button as={Link} to={'/auth/login'} variant={'primary'}>
               Вход / Регистрация
             </Button>
           )}

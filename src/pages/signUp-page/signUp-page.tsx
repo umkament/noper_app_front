@@ -25,7 +25,7 @@ export const SignUpPage = () => {
   const onSubmit = async (data: SignUpFormSchema) => {
     try {
       await registerUser(data).unwrap()
-      navigate('/login')
+      navigate('/auth/login')
     } catch (err: any) {
       // Обрабатываем ошибку, отправленную с сервера
       if (err.status === 400 && err.data && err.data.errorField) {
@@ -113,7 +113,7 @@ export const SignUpPage = () => {
             если у вас уже есть аккаунт
           </Typography>
           <div className={s.exitWrap}>
-            <Button as={Link} className={s.btnStyle} to={'/login'} variant={'link'}>
+            <Button as={Link} className={s.btnStyle} to={'/auth/login'} variant={'link'}>
               войти
             </Button>
             <LiaHandPointer className={s.pointer} size={25} />

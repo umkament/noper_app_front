@@ -19,7 +19,7 @@ const publicRoutes: RouteObject[] = [
   { element: <UsersListPage />, path: '/users' },
   { element: <PostPage />, path: '/post/:postId' },
   { element: <UserPage />, path: '/user/:userId' },
-  { element: <SignInPage />, path: '/login' },
+  { element: <SignInPage />, path: '/auth/login' },
   { element: <SignUpPage />, path: '/auth/register' },
 ]
 const privateRoutes: RouteObject[] = [

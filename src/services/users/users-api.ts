@@ -7,9 +7,6 @@ export const usersApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'http://localhost:4411',
     // credentials: 'include',
-    // prepareHeaders: headers => {
-    //   headers.append('x-auth-skip', 'true')
-    // },
   }),
   endpoints: builder => {
     return {
