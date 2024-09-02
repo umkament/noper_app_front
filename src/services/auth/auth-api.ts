@@ -1,20 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 import { UserInterface } from '../users'
+import { UserProfile, UserProfileResponse } from './auth.type'
 
 export const authApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'http://localhost:4411',
     credentials: 'include',
-    // prepareHeaders: headers => {
-    //   const token = localStorage.getItem('token')
-
-    //   if (token) {
-    //     headers.set('Authorization', `Bearer ${token}`)
-    //   }
-
-    //   return headers
-    // },
   }),
   endpoints: builder => {
     return {
@@ -24,6 +16,16 @@ export const authApi = createApi({
         },
         providesTags: ['Me'],
         query: () => `/auth/me`,
+      }),
+      checkAuthStatus: builder.query<{ authenticated: boolean }, void>({
+        query: () => '/auth/status',
+      }),
+      deleteAvatar: builder.mutation<void, void>({
+        invalidatesTags: ['Me'],
+        query: () => ({
+          method: 'DELETE',
+          url: '/auth/avatar',
+        }),
       }),
       loginUser: builder.mutation<UserInterface, Partial<UserInterface>>({
         invalidatesTags: ['Me'],
@@ -61,6 +63,37 @@ export const authApi = createApi({
           url: '/auth/register',
         }),
       }),
+      updateUserProfile: builder.mutation<UserProfileResponse, UserProfile>({
+        invalidatesTags: ['Me'],
+        async onQueryStarted(profileData, { dispatch, queryFulfilled }) {
+          const patchResult = dispatch(
+            authApi.util.updateQueryData('authMe', undefined, draft => {
+              if (draft) {
+                Object.assign(draft, profileData)
+              }
+            })
+          )
+
+          try {
+            await queryFulfilled
+          } catch {
+            patchResult.undo()
+          }
+        },
+
+        query: profileDate => ({
+          body: profileDate,
+          method: 'PUT',
+          url: '/edit/profile',
+        }),
+      }),
+      uploadAvatar: builder.mutation<{ url: string }, FormData>({
+        query: formData => ({
+          body: formData,
+          method: 'POST',
+          url: '/upload',
+        }),
+      }),
     }
   },
   reducerPath: 'authApi',
@@ -69,7 +102,11 @@ export const authApi = createApi({
 
 export const {
   useAuthMeQuery,
+  useCheckAuthStatusQuery,
+  useDeleteAvatarMutation,
   useLoginUserMutation,
   useLogoutUserMutation,
   useRegisterUserMutation,
+  useUpdateUserProfileMutation,
+  useUploadAvatarMutation,
 } = authApi

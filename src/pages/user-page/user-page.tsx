@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
 import postImg from '@/assets/photo4.jpeg'
@@ -16,19 +16,14 @@ export const UserPage = () => {
   const { userId } = useParams<{ userId: string }>()
 
   const { data: user, error: userError, isLoading: isUserLoading } = useGetUserQuery(userId || '')
+
   const {
-    data: posts = [],
+    data: responceData,
     error: postsError,
     isLoading: isPostsLoading,
   } = useGetUserPostsQuery(userId || '')
-  const { data: currentUser } = useAuthMeQuery()
 
-  const isCurrentUser = currentUser?._id === userId
-
-  useEffect(() => {
-    console.log('User Data:', user)
-    console.log('Posts Data:', posts)
-  }, [user, posts])
+  const posts = Array.isArray(responceData) ? responceData : responceData?.posts || []
 
   if (!userId) {
     return <div>Error: User ID is missing</div>
@@ -46,20 +41,29 @@ export const UserPage = () => {
   }
 
   return user ? (
-    <UserPageContent isCurrentUser={isCurrentUser} posts={posts || []} user={user} />
+    <UserPageContent posts={posts || []} user={user} userId={userId} />
   ) : (
     <Typography variant={'h2'}>User not found</Typography>
   )
 }
 
 interface UserProps {
-  isCurrentUser: boolean
   posts: PostInterface[]
   user: UserInterface
+  userId: string
 }
 
-export const UserPageContent: React.FC<UserProps> = ({ isCurrentUser, posts, user }) => {
+export const UserPageContent: React.FC<UserProps> = ({ posts, user, userId }) => {
   const postsBlockClass = posts.length === 0 ? `${s.postsBlock} ${s.empty}` : s.postsBlock
+
+  const { data: currentUser } = useAuthMeQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+    skip: !userId,
+  })
+
+  const isCurrentUser = currentUser?._id === userId
+
+  console.log('isCurrentUser:', isCurrentUser)
 
   return (
     <div className={s.mainContainer}>
@@ -68,7 +72,11 @@ export const UserPageContent: React.FC<UserProps> = ({ isCurrentUser, posts, use
           <img
             alt={'postImg'}
             className={s.imgStyle}
-            src={user.avatarUrl || `https://robohash.org/${user.username}.png`}
+            src={
+              user?.avatarUrl
+                ? `http://localhost:4411${user.avatarUrl}`
+                : `https://robohash.org/${user?.username}.png`
+            }
           />
         </div>
         <div className={s.textInfo}>
@@ -84,13 +92,16 @@ export const UserPageContent: React.FC<UserProps> = ({ isCurrentUser, posts, use
           </Typography>
           <div className={s.buttonStyle}>
             {isCurrentUser ? (
-              <Button as={Link} to={'/edit-profile'} variant={'tertiary'}>
+              <Button as={Link} to={`/edit-profile`} variant={'tertiary'}>
                 редактировать профиль <FaRegEdit />
               </Button>
             ) : (
               ''
             )}
           </div>
+          <Typography as={Link} className={s.link} to={`${user.link}`} variant={'link1'}>
+            {user.link}
+          </Typography>
         </div>
       </div>
       {isCurrentUser ? (

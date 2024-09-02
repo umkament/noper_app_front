@@ -4,6 +4,7 @@ import SimpleMDE from 'react-simplemde-editor'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { useAuthMeQuery } from '@/services/auth'
 import { MdAddAPhoto } from 'react-icons/md'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -12,6 +13,10 @@ import 'simplemde/dist/simplemde.min.css'
 import s from './addPost-page.module.scss'
 
 export const AddPostPage = () => {
+  const { data: user } = useAuthMeQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+  })
+
   const uniqueId = useMemo(() => uuidv4(), [])
   const inputFileRef = useRef<HTMLInputElement>(null)
   const [text, setText] = useState('')
@@ -62,7 +67,7 @@ export const AddPostPage = () => {
       <SimpleMDE className={s.editor} onChange={onChange} options={options} value={text} />
       <div>
         <Button>опубликовать статью</Button>
-        <Button as={Link} to={'/user'}>
+        <Button as={Link} to={`/user/${user?._id}`}>
           выйти
           {/* заменить ссылку выйти на профайл в дальнейшем */}
         </Button>

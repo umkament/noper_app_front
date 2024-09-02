@@ -12,3 +12,10 @@ export interface PostInterface {
   user: UserInterface
   viewsCount: number
 }
+
+export interface NoPostsResponce {
+  message: string
+  posts: []
+}
+
+export type UserPostsResponce = NoPostsResponce | PostInterface[]

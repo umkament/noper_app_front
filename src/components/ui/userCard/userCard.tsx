@@ -22,7 +22,9 @@ export const UserCard: React.FC<UserPostCardProps> = ({ user }) => {
       <div className={s.imageWrap}>
         <img
           className={s.imgprof}
-          src={user.avatarUrl || `https://robohash.org/${user.username}.png`}
+          src={
+            `http://localhost:4411${user.avatarUrl}` || `https://robohash.org/${user.username}.png`
+          }
         />
       </div>
       <div className={s.textContent}>

@@ -32,6 +32,7 @@ export const Layout = () => {
       console.error('Ошибка при выходе пользователя из аккаунта', error)
     }
   }, [logoutUser])
+
   const menuChangeHandler = (open: boolean) => {
     setMenuOpen(open)
   }
@@ -92,7 +93,11 @@ export const Layout = () => {
               onChange={menuChangeHandler}
               trigger={
                 <AvatarWithName
-                  avatar={userData?.avatarUrl || `https://robohash.org/${userData.username}.png`}
+                  avatar={
+                    userData?.avatarUrl
+                      ? `http://localhost:4411${userData.avatarUrl}`
+                      : `https://robohash.org/${userData?.username}.png`
+                  }
                   name={userData.username}
                 />
               }
@@ -103,7 +108,9 @@ export const Layout = () => {
                     моя страница{' '}
                     <Avatar
                       avatar={
-                        userData?.avatarUrl || `https://robohash.org/${userData.username}.png`
+                        userData?.avatarUrl
+                          ? `http://localhost:4411${userData.avatarUrl}`
+                          : `https://robohash.org/${userData?.username}.png`
                       }
                     />
                   </Button>

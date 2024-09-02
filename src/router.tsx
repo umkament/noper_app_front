@@ -3,6 +3,7 @@ import { Navigate, Outlet, RouteObject, RouterProvider, createHashRouter } from 
 import { Layout } from '@/components/layout'
 import { ErrorPage } from '@/pages/error-page'
 import { MainPage } from '@/pages/main-page'
+import Cookies from 'js-cookie'
 
 import { AddPostPage } from './pages/addPost-page'
 import { EditProfilePage } from './pages/editProfile-page'
@@ -11,6 +12,7 @@ import { SignInPage } from './pages/signIn-page'
 import { SignUpPage } from './pages/signUp-page'
 import { UserPage } from './pages/user-page'
 import { UsersListPage } from './pages/users-page'
+import { useCheckAuthStatusQuery } from './services/auth'
 
 const publicRoutes: RouteObject[] = [
   { element: <div> forgotPasswordPage</div>, path: '/forgot-password' },
@@ -47,7 +49,15 @@ export const Router = () => {
 }
 
 function PrivateRoutes() {
-  const isAuthenticated = !!localStorage.getItem('token')
+  const { data, error, isLoading } = useCheckAuthStatusQuery()
 
-  return isAuthenticated ? <Outlet /> : <Navigate to={'/login'} />
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
+
+  return error || !data?.authenticated ? <Navigate to={'/auth/login'} /> : <Outlet />
+
+  // const isAuthenticated = !!Cookies.get('token')
+  // console.log('isAuthenticated', isAuthenticated)
+  // return isAuthenticated ? <Outlet /> : <Navigate to={'/auth/login'} />
 }

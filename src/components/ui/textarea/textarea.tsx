@@ -5,7 +5,7 @@ import { FaXmark } from 'react-icons/fa6'
 
 import s from './textarea.module.scss'
 
-export type TextAreaProps = {
+export type TextareaProps = {
   className?: string
   disabled?: boolean
   errorMessage?: string
@@ -27,7 +27,7 @@ const getType = (type: string, showPassword: boolean) => {
   return type
 }
 
-export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
+export const TextArea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   (
     {
       className,
@@ -77,11 +77,11 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
               {showPassword ? <PiEyeDuotone /> : <PiEyeClosedDuotone />}
             </Button>
           )} */}
-          {value && (
+          {/* {value && (
             <button className={s.xMarkIcon} onClick={cleanTextHandler} type={'button'}>
               <FaXmark />
             </button>
-          )}
+          )} */}
           <textarea
             className={isError ? isError : s.default}
             disabled={disabled}
