@@ -1,4 +1,6 @@
 export { default as errorImg } from './404.svg'
+export { default as NOPER } from './NOPER.png'
+export { default as NPlogo } from './NOPERlogo.png'
 export { default as URLogo } from './URLogo.png'
 export { default as avatar } from './avatar.png'
 export { default as logoVariant1 } from './logoToLogin.png'

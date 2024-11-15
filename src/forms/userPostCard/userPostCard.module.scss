@@ -9,9 +9,18 @@
   text-align: match-parent;
 
   background: linear-gradient(60deg, var(--color-dark-500) 50%, var(--color-accent-900) 93%);
-  border: 0.25rem double var(--color-dark-500);
-  border-radius: 2% 13% 2% 2%;
+  border-radius: 0.3rem 1.5rem 0.2rem 0.2rem;
   box-shadow: 5px 13px 10px var(--color-dark-900);
+
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.003); /* Увеличение кнопки при наведении */
+    background: linear-gradient(60deg, var(--color-dark-500) 50%, var(--color-primary-300) 93%);
+    box-shadow: 2px 1px 15px -4px var(--color-primary-200);
+  }
 
   .linkoff {
     text-decoration: none;

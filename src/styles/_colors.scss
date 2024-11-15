@@ -1,10 +1,21 @@
 :root {
   // accent
-  --color-accent-100: rgb(234 252 129);
-  --color-accent-300: rgb(217 239 90);
-  --color-accent-500: rgb(188 217 24);
-  --color-accent-700: rgb(144 166 18);
-  --color-accent-900: rgb(100 115 12);
+  --color-accent-100: rgb(171 210 247);
+  --color-accent-300: #6fd5e4;
+  --color-accent-500: #67cfe5;
+  --color-accent-700: #4ac9e7;
+  --color-accent-900: #2f8fac;
+
+  // primary
+
+  --color-primary-100: #fffbca;
+  --color-primary-200: rgb(255 134 64 / 80%);
+  --color-primary-300: rgb(255 134 64);
+  --color-primary-400: rgb(255 160 102);
+  --color-primary-500: rgb(255 106 0);
+  --color-primary-700: rgb(204 86 0);
+  --color-primary-900: rgb(153 63 0);
+  --color-primary-1000: rgb(255 106 0 / 13.3%);
 
   // success
   --color-success-100: #c0a9fe;
@@ -42,10 +53,10 @@
   --color-light-900: #c3c1c7;
 
   // dark
-  --color-dark-100: #808080;
-  --color-dark-300: #4c4c4c;
-  --color-dark-500: #333;
-  --color-dark-600: #191919e5;
-  --color-dark-700: #171717;
-  --color-dark-900: #000;
+  --color-dark-100: #585a5c;
+  --color-dark-300: #47505a;
+  --color-dark-500: #212932;
+  --color-dark-600: #272d33;
+  --color-dark-700: #1c232b;
+  --color-dark-900: #0d0f10;
 }

@@ -1,14 +1,13 @@
 import React from 'react'
 import { Link, useParams } from 'react-router-dom'
 
+import { Button } from '@/components/ui/button'
+import { Typography } from '@/components/ui/typography'
 import { UserInterface } from '@/services/users'
 import { GiSkateboard } from 'react-icons/gi'
 import { MdRollerSkating } from 'react-icons/md'
 
 import s from './userCard.module.scss'
-
-import { Button } from '../button'
-import { Typography } from '../typography'
 
 type UserPostCardProps = {
   user: UserInterface
@@ -23,7 +22,9 @@ export const UserCard: React.FC<UserPostCardProps> = ({ user }) => {
         <img
           className={s.imgprof}
           src={
-            `http://localhost:4411${user.avatarUrl}` || `https://robohash.org/${user.username}.png`
+            user?.avatarUrl && user.avatarUrl.startsWith('/uploads/')
+              ? `http://localhost:4411${user.avatarUrl}` // Если путь относительный и начинается с /uploads/
+              : user?.avatarUrl || `https://robohash.org/${user?.username}.png` // Если URL полный или не задан
           }
         />
       </div>

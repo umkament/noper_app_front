@@ -1,6 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+import postImg from '@/assets/userPhoto.jpg'
+import { Avatar } from '@/components/ui/avatar'
+import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Typography } from '@/components/ui/typography'
 import { PostInterface } from '@/services/posts/posts.type'
@@ -10,25 +13,30 @@ import { PiHandHeartLight } from 'react-icons/pi'
 
 import s from './userPostCard.module.scss'
 
-import { Avatar } from '../avatar'
-import { Button } from '../button'
-
 type UserPostCardProps = {
   post: PostInterface
 }
 
 export const UserPostCard: React.FC<UserPostCardProps> = ({ post }) => {
   const isSave = () => Math.random() < 0.5
+  const avatarImage =
+    post?.user.avatarUrl && post.user.avatarUrl.startsWith('/uploads/')
+      ? `http://localhost:4411${post.user.avatarUrl}` // Если путь относительный и начинается с /uploads/
+      : post.user.avatarUrl || `https://robohash.org/${post.user.username}.png`
+  const postImage =
+    post?.imageUrl && post.imageUrl.startsWith('/uploads/')
+      ? `http://localhost:4411${post.imageUrl}`
+      : post.imageUrl || postImg
 
   return (
     <Card className={s.card}>
       <Link className={s.linkoff} to={`/post/${post._id}`}>
-        <img alt={'user_photo'} className={s.cardImg} src={post.imageUrl} />
+        <img alt={'user_photo'} className={s.cardImg} src={postImage} />
       </Link>
       <div className={s.textWrap}>
         <div className={s.avaName}>
           <Button as={Link} to={`/user/${post.user._id}`} variant={'icon'}>
-            <Avatar avatar={post.user.avatarUrl} />
+            <Avatar avatar={avatarImage} />
           </Button>
           <Typography className={s.userName} variant={'h3'}>
             {post.user.username}

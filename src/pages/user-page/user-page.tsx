@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
-import postImg from '@/assets/photo4.jpeg'
+import postImg from '@/assets/userPhoto.jpg'
 import { Button } from '@/components/ui/button'
 import { Typography } from '@/components/ui/typography'
 import { useAuthMeQuery } from '@/services/auth'
@@ -61,9 +61,12 @@ export const UserPageContent: React.FC<UserProps> = ({ posts, user, userId }) =>
     skip: !userId,
   })
 
+  console.log('currentUser from useAuthMeQuery:', currentUser)
+
   const isCurrentUser = currentUser?._id === userId
 
   console.log('isCurrentUser:', isCurrentUser)
+  console.log('avatarUrl:', user.avatarUrl)
 
   return (
     <div className={s.mainContainer}>
@@ -73,9 +76,9 @@ export const UserPageContent: React.FC<UserProps> = ({ posts, user, userId }) =>
             alt={'postImg'}
             className={s.imgStyle}
             src={
-              user?.avatarUrl
-                ? `http://localhost:4411${user.avatarUrl}`
-                : `https://robohash.org/${user?.username}.png`
+              user?.avatarUrl && user.avatarUrl.startsWith('/uploads/')
+                ? `http://localhost:4411${user.avatarUrl}` // Если путь относительный и начинается с /uploads/
+                : user?.avatarUrl || `https://robohash.org/${user?.username}.png` // Если URL полный или не задан
             }
           />
         </div>
@@ -90,6 +93,13 @@ export const UserPageContent: React.FC<UserProps> = ({ posts, user, userId }) =>
           >
             {user.description}
           </Typography>
+          {isCurrentUser ? (
+            <Typography as={Link} className={s.link} to={`${user.link}`} variant={'link1'}>
+              {user.link}
+            </Typography>
+          ) : (
+            ''
+          )}
           <div className={s.buttonStyle}>
             {isCurrentUser ? (
               <Button as={Link} to={`/edit-profile`} variant={'tertiary'}>
@@ -99,9 +109,6 @@ export const UserPageContent: React.FC<UserProps> = ({ posts, user, userId }) =>
               ''
             )}
           </div>
-          <Typography as={Link} className={s.link} to={`${user.link}`} variant={'link1'}>
-            {user.link}
-          </Typography>
         </div>
       </div>
       {isCurrentUser ? (
@@ -120,7 +127,11 @@ export const UserPageContent: React.FC<UserProps> = ({ posts, user, userId }) =>
                 alt={post.title}
                 className={s.postImg}
                 key={post._id}
-                src={post.imageUrl || postImg}
+                src={
+                  post?.imageUrl && post.imageUrl.startsWith('/uploads/')
+                    ? `http://localhost:4411${post.imageUrl}` // Если путь относительный и начинается с /uploads/
+                    : post.imageUrl || postImg
+                }
               />
             </Link>
           ))

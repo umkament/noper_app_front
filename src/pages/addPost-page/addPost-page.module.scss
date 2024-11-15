@@ -18,20 +18,28 @@
 }
 
 .illustrator {
+  position: relative;
+
   display: flex;
   align-items: center;
   justify-content: center;
 
-  width: 90%;
-  height: 250px;
-  margin: auto;
+  width: 100%; /* Установите желаемую ширину */
+  height: 400px; /* Установите желаемую высоту */
+
+  background-position: center;
+  background-size: cover;
+
+  // width: 90%;
+  // height: 250px;
+  // margin: auto;
 
   border: 0.1rem solid var(--color-dark-100);
   border-radius: 5px;
+}
 
-  .buttonStyle {
-    margin: auto;
-  }
+.illustrator img {
+  display: none;
 }
 
 .title,

@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 
-import { avatar, logoUR } from '@/assets'
+import { NPlogo, logoUR } from '@/assets'
 import URLogo from '@/assets/URLogo.png'
 import { AvatarWithName } from '@/components/ui/avatar/avatarWithName'
 import { Button } from '@/components/ui/button'
@@ -11,6 +11,7 @@ import { useAuthMeQuery, useLogoutUserMutation } from '@/services/auth'
 import { FaPeopleRobbery } from 'react-icons/fa6'
 import { GiNewspaper, GiRollerSkate } from 'react-icons/gi'
 import { GoInfo } from 'react-icons/go'
+import { PiAtomLight } from 'react-icons/pi'
 
 import s from './layout.module.scss'
 
@@ -47,7 +48,7 @@ export const Layout = () => {
         <div className={s.header_body}>
           <Link to={'/'}>
             {/* <img alt={logoUR} className={s.logo} src={logoUR} /> */}
-            <img alt={logoUR} className={s.logo} src={URLogo} />
+            <img alt={logoUR} className={s.logo} src={NPlogo} />
           </Link>
           <nav className={s.header_nav}>
             <ul className={s.list_menu}>
@@ -63,7 +64,7 @@ export const Layout = () => {
                 <Button variant={'icon'}>
                   <li className={s.list_item}>
                     <FaPeopleRobbery className={s.icons} />{' '}
-                    <span className={s.text}>спортсмены</span>
+                    <span className={s.text}>пользователи</span>
                   </li>
                 </Button>
               </Link>
@@ -71,7 +72,7 @@ export const Layout = () => {
               <Link className={s.linkOff} to={'/error'}>
                 <Button variant={'icon'}>
                   <li className={s.list_item}>
-                    <GiRollerSkate className={s.icons} /> <span className={s.text}>дисциплин</span>
+                    <PiAtomLight className={s.icons} /> <span className={s.text}>концепция</span>
                   </li>
                 </Button>
               </Link>
@@ -79,7 +80,7 @@ export const Layout = () => {
               <Link className={s.linkOff} to={'/error'}>
                 <Button variant={'icon'}>
                   <li className={s.list_item}>
-                    <GoInfo className={s.icons} /> <span className={s.text}>контакты</span>
+                    <GoInfo className={s.icons} /> <span className={s.text}>bio</span>
                   </li>
                 </Button>
               </Link>

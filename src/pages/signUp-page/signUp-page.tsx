@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 
-import toLoginLogo from '@/assets/toLogin.png'
+import NOPER from '@/assets/NOPER.png'
 import { Button } from '@/components/ui/button'
 import { ControlledInput } from '@/components/ui/controlled-input'
 import { Typography } from '@/components/ui/typography'
@@ -43,7 +43,7 @@ export const SignUpPage = () => {
   return (
     <div className={s.container}>
       <div className={s.card}>
-        <img alt={'logo'} className={s.logo} src={toLoginLogo} />
+        <img alt={'logo'} className={s.logo} src={NOPER} />
         <Typography className={s.text} variant={'large'}>
           создай свой профиль
         </Typography>

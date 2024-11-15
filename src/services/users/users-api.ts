@@ -6,7 +6,7 @@ import { UserPostsResponce } from '../posts'
 export const usersApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'http://localhost:4411',
-    // credentials: 'include',
+    credentials: 'include',
   }),
   endpoints: builder => {
     return {

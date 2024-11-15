@@ -3,9 +3,9 @@ import { UserInterface } from '../users'
 export interface PostInterface {
   _id: string
   createdAt: Date
-  imageUrl: string
+  imageUrl?: string
   likes: number
-  tags: string[]
+  tags?: string[]
   text: string
   title: string
   updatedAt: Date

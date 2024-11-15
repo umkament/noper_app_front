@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import { UserCard } from '@/components/ui/userCard'
+import { UserCard } from '@/forms/userCard'
 import { useGetUsersQuery } from '@/services/users'
 
 import s from './users-page.module.scss'
@@ -22,9 +22,9 @@ export function UsersListPage() {
       </div>
       <div className={s.rightContainer}>
         <div className={s.fixed}>
-          <Button>Тренеры</Button>
-          <Button>Спортсмены</Button>
-          <Button>Ученики</Button>
+          <Button>новички</Button>
+          <Button>давние</Button>
+          <Button>рандомные</Button>
         </div>
       </div>
     </div>
