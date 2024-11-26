@@ -21,6 +21,17 @@ export const postsApi = createApi({
           }
         },
       }),
+      // Добавляем удаление статьи
+      deletePost: builder.mutation<void, { postId: string; userId: string }>({
+        invalidatesTags: (result, error, { postId, userId }) => [
+          { id: postId, type: 'Post' }, // Удаляем конкретный пост
+          { id: userId, type: 'UserPosts' }, // Обновляем список постов пользователя
+        ],
+        query: ({ postId }) => ({
+          method: 'DELETE',
+          url: `/post/${postId}`,
+        }),
+      }),
       deletePostImage: builder.mutation<void, void>({
         invalidatesTags: ['Post'],
         query: () => ({
@@ -31,8 +42,40 @@ export const postsApi = createApi({
       getPost: builder.query<PostInterface, string>({
         query: postId => `/post/${postId}`,
       }),
+      getPostLike: builder.query<{ likedByUser: boolean; likesCount: number }, { postId: string }>({
+        providesTags: (result, error, { postId }) => [{ id: postId, type: 'Post' }],
+        query: ({ postId }) => ({
+          params: { targetType: 'Post' },
+          url: `/likes/${postId}`,
+        }),
+      }),
       getPosts: builder.query<PostInterface[], void>({
+        // providesTags: (result, error, { userId }) =>
+        //   result
+        //     ? [
+        //         ...result.map(post => ({ id: post._id, type: 'Post' as const })), // Указываем тип явно
+        //         { id: userId, type: 'UserPosts' as const }, // Указываем тип явно
+        //       ]
+        //     : [{ id: userId, type: 'UserPosts' as const }],
         query: () => `/posts`,
+      }),
+
+      togglePostLike: builder.mutation<void, { postId: string }>({
+        invalidatesTags: (result, error, { postId }) => [{ id: postId, type: 'Post' }],
+        query: ({ postId }) => ({
+          body: { targetType: 'Post' },
+          method: 'POST',
+          url: `/like/${postId}`,
+        }),
+      }),
+      // Добавляем редактирование статьи
+      updatePost: builder.mutation<void, { data: Partial<PostInterface>; postId: string }>({
+        invalidatesTags: (result, error, { postId }) => [{ id: postId, type: 'Post' }],
+        query: ({ data, postId }) => ({
+          body: data,
+          method: 'PATCH',
+          url: `/post/${postId}`,
+        }),
       }),
       uploadImage: builder.mutation<{ url: string }, FormData>({
         query: formData => ({
@@ -44,13 +87,17 @@ export const postsApi = createApi({
     }
   },
   reducerPath: 'postsApi',
-  tagTypes: ['Post'],
+  tagTypes: ['Post', 'UserPosts'],
 })
 
 export const {
   useCreatePostMutation,
   useDeletePostImageMutation,
+  useDeletePostMutation,
+  useGetPostLikeQuery,
   useGetPostQuery,
   useGetPostsQuery,
+  useTogglePostLikeMutation,
+  useUpdatePostMutation,
   useUploadImageMutation,
 } = postsApi

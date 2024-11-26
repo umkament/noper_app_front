@@ -2,10 +2,13 @@ import React from 'react'
 import { Link, useParams } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
 import { Typography } from '@/components/ui/typography'
-import { UserInterface } from '@/services/users'
-import { GiSkateboard } from 'react-icons/gi'
-import { MdRollerSkating } from 'react-icons/md'
+import { UserInterface, useGetUserLikeQuery, useToggleUserLikeMutation } from '@/services/users'
+import { BsBalloonHeartFill } from 'react-icons/bs'
+import { CiBookmarkPlus } from 'react-icons/ci'
+import { GiBinoculars } from 'react-icons/gi'
+import { PiHandHeartLight } from 'react-icons/pi'
 
 import s from './userCard.module.scss'
 
@@ -15,10 +18,23 @@ type UserPostCardProps = {
 
 export const UserCard: React.FC<UserPostCardProps> = ({ user }) => {
   const random = () => Math.random() < 0.5
+  const skipQuery = !user._id
+  const { data: likesData } = useGetUserLikeQuery({ userId: user._id! }, { skip: skipQuery })
+  const [toggleLike] = useToggleUserLikeMutation()
+
+  const handleToggleLike = async (event: React.MouseEvent) => {
+    event?.stopPropagation()
+    console.log('Клик на кнопке лайка')
+    try {
+      await toggleLike({ userId: user._id! }).unwrap()
+    } catch (error) {
+      console.error('Ошибка при изменении лайка:', error)
+    }
+  }
 
   return (
-    <Button as={Link} className={s.buttonWrap} to={`/user/${user._id}`} variant={'tertiary'}>
-      <div className={s.imageWrap}>
+    <div className={s.buttonWrap}>
+      <Link className={s.imageWrap} to={`/user/${user._id}`}>
         <img
           className={s.imgprof}
           src={
@@ -27,18 +43,30 @@ export const UserCard: React.FC<UserPostCardProps> = ({ user }) => {
               : user?.avatarUrl || `https://robohash.org/${user?.username}.png` // Если URL полный или не задан
           }
         />
-      </div>
+      </Link>
       <div className={s.textContent}>
-        <Typography className={s.userName} variant={'h3'}>
-          {user.username}
-        </Typography>
-        <Typography className={s.name} variant={'subtitle1'}>
-          {`${user.name} ${user.surname}`}
-        </Typography>
-        <Button className={s.discipline} variant={'icon'}>
-          {random() ? <GiSkateboard /> : <MdRollerSkating />}
-        </Button>
+        <Link className={s.linkOff} to={`/user/${user._id}`}>
+          <Typography className={s.userName} variant={'h3'}>
+            @{user.username}
+          </Typography>
+          <Typography className={s.name} variant={'subtitle1'}>
+            {`${user.name} ${user.surname}`}
+          </Typography>
+        </Link>
+        <div className={s.smllbtns}>
+          <Button className={s.discipline} variant={'icon'}>
+            {random() ? <GiBinoculars size={22} /> : <CiBookmarkPlus size={22} />}
+          </Button>
+          <Button className={s.favorite} onClick={handleToggleLike} variant={'icon'}>
+            {likesData?.likedByUser ? (
+              <BsBalloonHeartFill size={22} />
+            ) : (
+              <PiHandHeartLight size={22} />
+            )}
+            {likesData?.likesCount}
+          </Button>
+        </div>
       </div>
-    </Button>
+    </div>
   )
 }

@@ -6,6 +6,7 @@ import { Avatar } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Typography } from '@/components/ui/typography'
+import { useGetPostLikeQuery, useTogglePostLikeMutation } from '@/services/posts'
 import { PostInterface } from '@/services/posts/posts.type'
 import { BsBalloonHeartFill } from 'react-icons/bs'
 import { FaRegEye } from 'react-icons/fa6'
@@ -18,7 +19,20 @@ type UserPostCardProps = {
 }
 
 export const UserPostCard: React.FC<UserPostCardProps> = ({ post }) => {
-  const isSave = () => Math.random() < 0.5
+  const skipQuery = !post._id
+  const { data: likesData, isLoading: likesLoading } = useGetPostLikeQuery(
+    { postId: post._id! },
+    { skip: skipQuery }
+  )
+  const [toggleLike] = useTogglePostLikeMutation()
+
+  const handleToggleLike = async () => {
+    try {
+      await toggleLike({ postId: post._id! }).unwrap()
+    } catch (error) {
+      console.error('Ошибка при изменении лайка:', error)
+    }
+  }
   const avatarImage =
     post?.user.avatarUrl && post.user.avatarUrl.startsWith('/uploads/')
       ? `http://localhost:4411${post.user.avatarUrl}` // Если путь относительный и начинается с /uploads/
@@ -45,9 +59,7 @@ export const UserPostCard: React.FC<UserPostCardProps> = ({ post }) => {
         <Typography className={s.title} variant={'h2'}>
           {post.title}
         </Typography>
-        {/* <Typography className={s.description} variant={'body1'}>
-          {post.text}
-        </Typography> */}
+
         <div className={s.wrapinfo}>
           <Typography className={s.date}>
             {new Date(post.createdAt).toLocaleDateString()}
@@ -57,9 +69,13 @@ export const UserPostCard: React.FC<UserPostCardProps> = ({ post }) => {
               <span className={s.viewsCount}>{post.viewsCount}</span>
               <FaRegEye className={s.eyeIcon} size={20} />
             </Typography>
-            <Button className={s.favorite} variant={'icon'}>
-              {isSave() ? <BsBalloonHeartFill size={22} /> : <PiHandHeartLight size={22} />}
-              {post.likes}
+            <Button className={s.favorite} onClick={handleToggleLike} variant={'icon'}>
+              {likesData?.likedByUser ? (
+                <BsBalloonHeartFill size={22} />
+              ) : (
+                <PiHandHeartLight size={22} />
+              )}
+              {likesData?.likesCount}
             </Button>
           </div>
         </div>

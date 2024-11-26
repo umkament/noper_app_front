@@ -93,32 +93,27 @@ export const UserPageContent: React.FC<UserProps> = ({ posts, user, userId }) =>
           >
             {user.description}
           </Typography>
-          {isCurrentUser ? (
+          {isCurrentUser && (
             <Typography as={Link} className={s.link} to={`${user.link}`} variant={'link1'}>
               {user.link}
             </Typography>
-          ) : (
-            ''
           )}
           <div className={s.buttonStyle}>
-            {isCurrentUser ? (
+            {isCurrentUser && (
               <Button as={Link} to={`/edit-profile`} variant={'tertiary'}>
                 редактировать профиль <FaRegEdit />
               </Button>
-            ) : (
-              ''
             )}
           </div>
         </div>
       </div>
-      {isCurrentUser ? (
+      {isCurrentUser && (
         <Button as={Link} to={'/add-post'}>
           добавить статью
           <GrTextWrap />
         </Button>
-      ) : (
-        ''
       )}
+
       <div className={postsBlockClass}>
         {posts && posts.length > 0 ? (
           posts.map(post => (

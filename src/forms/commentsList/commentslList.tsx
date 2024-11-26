@@ -10,7 +10,7 @@ import s from './commentList.module.scss'
 
 type CommentListType = {
   comments: CommentInterface[]
-  currentUser: { _id: string } | null // Добавляем информацию о текущем пользователе
+  currentUser: { _id: string } | null | undefined // Добавляем информацию о текущем пользователе
   onDeleteComment: (commentId: string) => void
   postAuthorId: string //id автора статьи
 }

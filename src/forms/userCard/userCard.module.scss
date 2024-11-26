@@ -15,6 +15,17 @@
     border-radius: 5% 3% 0.2%;
     box-shadow: 0 2px 5px 3px var(--color-accent-900);
 
+    transition:
+      background-color 0.3s ease,
+      transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.03); /* Увеличение кнопки при наведении */
+      background: linear-gradient(60deg, var(--color-dark-500) 50%, var(--color-primary-300) 93%);
+      border: 2px solid var(--color-accent-900);
+      box-shadow: 2px 1px 15px -4px var(--color-primary-200);
+    }
+
     .imgprof {
       width: 100%;
       height: 100%;
@@ -30,6 +41,17 @@
     width: 100%;
     height: 60%;
 
+    .linkOff {
+      text-decoration: none;
+      transition:
+        background-color 0.3s ease,
+        transform 0.3s ease;
+
+      &:hover {
+        transform: scale(1.05); /* Увеличение кнопки при наведении */
+      }
+    }
+
     .userName {
       margin-bottom: 1rem;
       font-size: 2rem;
@@ -41,10 +63,23 @@
       color: var(--color-accent-900);
     }
 
-    .discipline {
-      margin-top: auto;
-      margin-left: auto;
+    .smllbtns {
+      display: flex;
+      flex-direction: column;
     }
+
+    .discipline,
+    .favorite {
+      pointer-events: auto; /* Гарантирует, что кнопки реагируют на клики */
+      position: relative;
+      z-index: 1; /* Убедитесь, что каждая кнопка на переднем плане */
+      margin-top: 1rem;
+    }
+
+    // .discipline {
+    //   margin-top: auto;
+    //   margin-left: auto;
+    // }
   }
 }
 

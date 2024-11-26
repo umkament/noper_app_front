@@ -69,7 +69,7 @@ export const Layout = () => {
                 </Button>
               </Link>
 
-              <Link className={s.linkOff} to={'/error'}>
+              <Link className={s.linkOff} to={'/concept'}>
                 <Button variant={'icon'}>
                   <li className={s.list_item}>
                     <PiAtomLight className={s.icons} /> <span className={s.text}>концепция</span>
@@ -77,7 +77,7 @@ export const Layout = () => {
                 </Button>
               </Link>
 
-              <Link className={s.linkOff} to={'/error'}>
+              <Link className={s.linkOff} to={'/bio'}>
                 <Button variant={'icon'}>
                   <li className={s.list_item}>
                     <GoInfo className={s.icons} /> <span className={s.text}>bio</span>

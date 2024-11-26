@@ -6,6 +6,8 @@ import { MainPage } from '@/pages/main-page'
 import Cookies from 'js-cookie'
 
 import { AddPostPage } from './pages/addPost-page'
+import { BioPage } from './pages/bio-page '
+import { ConceptPage } from './pages/concept-page'
 import { EditProfilePage } from './pages/editProfile-page'
 import { PostPage } from './pages/post-page'
 import { SignInPage } from './pages/signIn-page'
@@ -23,10 +25,13 @@ const publicRoutes: RouteObject[] = [
   { element: <UserPage />, path: '/user/:userId' },
   { element: <SignInPage />, path: '/auth/login' },
   { element: <SignUpPage />, path: '/auth/register' },
+  { element: <ConceptPage />, path: '/concept' },
+  { element: <BioPage />, path: '/bio' },
 ]
 const privateRoutes: RouteObject[] = [
   { element: <div> ProfilePage</div>, path: '/my-profile' },
   { element: <AddPostPage />, path: '/add-post' },
+  { element: <AddPostPage />, path: '/edit-post/:postId' },
   { element: <EditProfilePage />, path: '/edit-profile' },
 ]
 

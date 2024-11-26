@@ -1,20 +1,16 @@
-import { useMemo, useRef, useState } from 'react'
-import { React } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import SimpleMDE from 'react-simplemde-editor'
 
 import { Button } from '@/components/ui/button'
-import { ControlledInput } from '@/components/ui/controlled-input'
 import { Input } from '@/components/ui/input'
 import { useAuthMeQuery } from '@/services/auth'
 import {
-  PostInterface,
   useCreatePostMutation,
   useGetPostQuery,
+  useUpdatePostMutation,
   useUploadImageMutation,
 } from '@/services/posts'
-import { useGetUserQuery } from '@/services/users'
 import { MdAddAPhoto, MdOutlineAddAPhoto } from 'react-icons/md'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -25,6 +21,7 @@ import s from './addPost-page.module.scss'
 export const AddPostPage = () => {
   const { postId } = useParams<{ postId: string }>()
   const [createPost] = useCreatePostMutation()
+  const [updatePost] = useUpdatePostMutation()
   const [uploadImage] = useUploadImageMutation()
   const { data: post } = useGetPostQuery(postId, { skip: !postId })
   const { data: user } = useAuthMeQuery()
@@ -33,12 +30,23 @@ export const AddPostPage = () => {
   const [title, setTitle] = useState('')
   const [text, setText] = useState('')
   const [tags, setTags] = useState('')
-  const [selectedFile, setSelectedFile] = useState(null)
-  const [imagePreview, setImagePreview] = useState<string>(post?.imageUrl || '')
+  const [selectedFile, setSelectedFile] = useState<File | null>(null)
+  const [imagePreview, setImagePreview] = useState<string>('')
 
   const inputFileRef = useRef<HTMLInputElement>(null)
+  const isEdit = !!postId
 
-  //настройки редактора
+  // Инициализация полей в режиме редактирования
+  useEffect(() => {
+    if (isEdit && post) {
+      setTitle(post.title)
+      setText(post.text)
+      setTags(post.tags?.join(', ') || '')
+      setImagePreview(post.imageUrl || '')
+    }
+  }, [post, isEdit])
+
+  // Настройки редактора
   const uniqueId = useMemo(() => uuidv4(), [])
   const onChange = (value: string) => {
     setText(value)
@@ -75,51 +83,55 @@ export const AddPostPage = () => {
       setImagePreview(previewUrl)
     }
   }
-  const handleDeletePostImage = async () => {
+  const handleDeletePostImage = () => {
     setImagePreview('')
     setSelectedFile(null)
   }
 
-  const handleSubmit = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
     try {
       let imageUrl = imagePreview
 
-      // 1. Сначала загружаем изображение, если оно есть
+      // Загружаем изображение, если оно выбрано
       if (selectedFile) {
         const formData = new FormData()
 
         formData.append('image', selectedFile)
-
         const imageResponse = await uploadImage(formData).unwrap()
 
-        console.log('imageResponse', imageResponse)
-
-        imageUrl = imageResponse.url // Предполагаем, что сервер вернет URL загруженного изображения
+        imageUrl = imageResponse.url // URL загруженного изображения
       }
+
       const tagsArray = tags
         .split(',')
         .map(tag => tag.trim())
         .filter(tag => tag.length > 0)
 
-      // 2. Отправляем текстовые данные поста
       const postData = {
-        // Добавляем URL загруженного изображения
-        tags: tagsArray, // Преобразуем строку тегов в массив
+        imageUrl,
+        tags: tagsArray,
         text,
         title,
       }
 
-      console.log('postData', postData)
+      if (isEdit) {
+        // Обновление поста
+        await updatePost({ data: postData, postId: postId! }).unwrap()
+        alert('Пост успешно обновлен!')
+      } else {
+        // Создание нового поста
+        const newPost = await createPost(postData).unwrap()
 
-      const postResponse = await createPost({ ...postData, imageUrl }).unwrap()
+        alert('Пост успешно создан!')
+        navigate(`/post/${newPost._id}`)
+      }
 
-      console.log('postResponse', postResponse)
-      // Переход на страницу нового поста
-      navigate(`/post/${postResponse._id}`)
+      navigate(`/user/${user?._id}`)
     } catch (error) {
-      console.error('Ошибка при создании поста:', error)
+      console.error('Ошибка при сохранении поста:', error)
+      alert('Не удалось сохранить пост.')
     }
   }
 
@@ -132,11 +144,11 @@ export const AddPostPage = () => {
         <input hidden onChange={handleFileChange} ref={inputFileRef} type={'file'} />
         {imagePreview ? (
           <Button onClick={handleDeletePostImage} type={'button'}>
-            удалить изображение <MdOutlineAddAPhoto />
+            Удалить изображение <MdOutlineAddAPhoto />
           </Button>
         ) : (
           <Button onClick={handleButtonClick} type={'button'}>
-            иллюстрировать статью <MdAddAPhoto />
+            Добавить изображение <MdAddAPhoto />
           </Button>
         )}
       </div>
@@ -145,20 +157,22 @@ export const AddPostPage = () => {
         label={'Заглавие статьи'}
         name={'title'}
         onChange={e => setTitle(e.target.value)}
-        placeholder={'придумай заголовок для своей статьи'}
+        placeholder={'Придумайте заголовок для своей статьи'}
+        value={title}
       />
       <Input
         className={s.tags}
-        label={'тэги'}
+        label={'Теги'}
         name={'tags'}
         onChange={e => setTags(e.target.value)}
-        placeholder={'если тегов больше, чем один, добавь запятую'}
+        placeholder={'Если тегов больше, чем один, добавьте запятую'}
+        value={tags}
       />
       <SimpleMDE className={s.editor} onChange={onChange} options={options} value={text} />
       <div>
-        <Button type={'submit'}>опубликовать статью</Button>
+        <Button type={'submit'}>{isEdit ? 'Сохранить изменения' : 'Опубликовать статью'}</Button>
         <Button as={Link} to={`/user/${user?._id}`}>
-          выйти
+          Отменить
         </Button>
       </div>
     </form>
