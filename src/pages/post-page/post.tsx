@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import ReactMarkdown from 'react-markdown'
+import { Link, useNavigate } from 'react-router-dom'
 
 import postImg from '@/assets/userPhoto.jpg'
 import { Avatar } from '@/components/ui/avatar'
@@ -19,6 +20,9 @@ import { UserInterface, useGetUserPostsQuery } from '@/services/users'
 import { BsBalloonHeartFill } from 'react-icons/bs'
 import { FaRegEye } from 'react-icons/fa6'
 import { PiHandHeartLight } from 'react-icons/pi'
+import rehypeHighlight from 'rehype-highlight'
+
+import 'highlight.js/styles/github.css'
 
 import s from './post-page.module.scss'
 
@@ -133,7 +137,7 @@ export const Post: React.FC<PostProps> = ({
       <div className={s.photoWrap}>
         <img alt={'postImg'} className={s.imgStyle} src={postImage} />
         <div className={s.info}>
-          <Button variant={'icon'}>
+          <Button as={Link} to={`/user/${post.user._id}`} variant={'icon'}>
             <Avatar avatar={avatarImage} />
           </Button>
           <Typography className={s.view}>
@@ -166,7 +170,7 @@ export const Post: React.FC<PostProps> = ({
             ))}
         </Typography>
         <Typography className={s.text} variant={'body1'}>
-          {post.text}
+          <ReactMarkdown rehypePlugins={[rehypeHighlight]}>{post.text}</ReactMarkdown>
         </Typography>
       </div>
       {isAuthor && (

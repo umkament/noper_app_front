@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import ReactMarkdown from 'react-markdown'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import SimpleMDE from 'react-simplemde-editor'
 
@@ -11,8 +12,16 @@ import {
   useUpdatePostMutation,
   useUploadImageMutation,
 } from '@/services/posts'
+import hljs from 'highlight.js'
+import { marked } from 'marked'
 import { MdAddAPhoto, MdOutlineAddAPhoto } from 'react-icons/md'
+import rehypeHighlight from 'rehype-highlight'
 import { v4 as uuidv4 } from 'uuid'
+
+import 'highlight.js/styles/atom-one-dark.css'
+import 'highlight.js/styles/github.css' // Вы можете выбрать другой стиль, если хотите
+
+import { Typography } from '@/components/ui/typography'
 
 import 'simplemde/dist/simplemde.min.css'
 
@@ -61,6 +70,30 @@ export const AddPostPage = () => {
       },
       maxHeight: '400px',
       placeholder: 'Введите текст...',
+      previewRender(plainText: string) {
+        // Преобразуем Markdown в HTML с помощью 'marked'
+        const html = marked(plainText)
+
+        // Убедимся, что html это строка
+        if (typeof html === 'string') {
+          // Подсвечиваем код в блоках <code> с помощью highlight.js
+          const highlightedHtml = html.replace(
+            /<pre><code class="([^"]+)">([\s\S]*?)<\/code><\/pre>/g,
+            (match: string, language: string, code: string) => {
+              // Подсветка кода с помощью highlight.js
+              const highlightedCode = hljs.highlightAuto(code).value
+
+              return `<pre><code class="${language}">${highlightedCode}</code></pre>`
+            }
+          )
+
+          // Возвращаем HTML с подсветкой
+          return highlightedHtml
+        }
+
+        // В случае ошибки возвращаем пустую строку или другое значение по умолчанию
+        return ''
+      },
       spellChecker: false,
       status: false,
     }),
@@ -169,6 +202,20 @@ export const AddPostPage = () => {
         value={tags}
       />
       <SimpleMDE className={s.editor} onChange={onChange} options={options} value={text} />
+
+      {/* <div className={s.previewContainer}>
+        <h3>Превью:</h3>
+        <div className={s.preview} dangerouslySetInnerHTML={{ __html: marked(text) }} />
+      </div> */}
+
+      <div className={s.previewWrap}>
+        <Typography variant={'h2'}>Предварительный просмотр</Typography>
+        <div className={s.previewContent}>
+          {/* Здесь рендерим Markdown с подсветкой синтаксиса */}
+          <ReactMarkdown rehypePlugins={[rehypeHighlight]}>{text}</ReactMarkdown>
+        </div>
+      </div>
+
       <div>
         <Button type={'submit'}>{isEdit ? 'Сохранить изменения' : 'Опубликовать статью'}</Button>
         <Button as={Link} to={`/user/${user?._id}`}>

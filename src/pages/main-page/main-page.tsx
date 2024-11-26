@@ -18,7 +18,10 @@ export const MainPage: React.FC = () => {
 
   return (
     <div className={s.container}>
-      {posts?.map(post => <UserPostCard key={post._id} post={post} />)}
+      {posts
+        ?.slice()
+        .reverse()
+        .map(post => <UserPostCard key={post._id} post={post} />)}
     </div>
   )
 }

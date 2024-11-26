@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 
 import postImg from '@/assets/userPhoto.jpg'
 import { Button } from '@/components/ui/button'
@@ -54,12 +54,22 @@ interface UserProps {
 }
 
 export const UserPageContent: React.FC<UserProps> = ({ posts, user, userId }) => {
+  const navigate = useNavigate()
   const postsBlockClass = posts.length === 0 ? `${s.postsBlock} ${s.empty}` : s.postsBlock
 
   const { data: currentUser } = useAuthMeQuery(undefined, {
     refetchOnMountOrArgChange: true,
     skip: !userId,
   })
+  const handlePostClick = (postId: string) => {
+    if (!currentUser) {
+      // Если пользователь не авторизован, перенаправляем на страницу входа
+      navigate('/auth/login')
+    } else {
+      // Если пользователь авторизован, переходим на страницу поста
+      navigate(`/post/${postId}`)
+    }
+  }
 
   console.log('currentUser from useAuthMeQuery:', currentUser)
 
@@ -117,7 +127,7 @@ export const UserPageContent: React.FC<UserProps> = ({ posts, user, userId }) =>
       <div className={postsBlockClass}>
         {posts && posts.length > 0 ? (
           posts.map(post => (
-            <Link key={post._id} to={`/post/${post._id}`}>
+            <div key={post._id} onClick={() => handlePostClick(post._id)}>
               <img
                 alt={post.title}
                 className={s.postImg}
@@ -128,7 +138,7 @@ export const UserPageContent: React.FC<UserProps> = ({ posts, user, userId }) =>
                     : post.imageUrl || postImg
                 }
               />
-            </Link>
+            </div>
           ))
         ) : (
           <Typography className={s.text} variant={'h3'}>

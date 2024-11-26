@@ -68,3 +68,60 @@
     }
   }
 }
+
+.markdown {
+  padding: 1rem;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+}
+
+.markdown pre {
+  padding: 1rem;
+
+  font-family: 'Courier New', Courier, monospace;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+
+  background-color: #f5f5f5;
+  border-radius: 5px;
+}
+
+.markdown code {
+  padding: 0.2rem 0.4rem;
+  font-family: 'Courier New', Courier, monospace;
+  background-color: #f5f5f5;
+  border-radius: 3px;
+}
+
+.markdown ul {
+  margin-left: 2rem;
+  list-style-type: disc;
+}
+
+.markdown ol {
+  margin-left: 2rem;
+  list-style-type: decimal;
+}
+
+.markdown blockquote {
+  padding-left: 1rem;
+  font-style: italic;
+  color: #555;
+  border-left: 4px solid #ccc;
+}
+
+.previewWrap {
+  width: 640px;
+  margin-top: 2rem;
+}
+
+.previewContent {
+  padding: 1rem;
+
+  color: var(--color-light-900);
+
+  background: linear-gradient(var(--color-dark-700) 50%, var(--color-accent-700) 450%);
+  border: 0.1rem solid var(--color-dark-100);
+  border-radius: 0.1rem;
+  box-shadow: 0 4px 8px 5px var(--color-dark-900);
+}
