@@ -8,15 +8,13 @@ import s from './users-page.module.scss'
 
 export function UsersListPage() {
   const { data: users, error, isLoading } = useGetUsersQuery()
-  const [sortType, setSortType] = useState<'new' | 'old' | 'random'>('old') // По умолчанию: от старых к новым
-  const [sortedUsers, setSortedUsers] = useState(users || []) // Состояние для отсортированных пользователей
+  const [sortType, setSortType] = useState<'new' | 'old' | 'random'>('new') // По умолчанию: от новых к старым
+  const [sortedUsers, setSortedUsers] = useState(users || []) // состояние для отсортированных пользователей
 
-  // Эффект для сортировки пользователей при изменении `sortType` или данных
   useEffect(() => {
     if (!users) {
       return
     }
-
     const sorted = [...users]
 
     if (sortType === 'new') {
