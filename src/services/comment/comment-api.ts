@@ -26,6 +26,8 @@ export const commentApi = createApi({
         Record<string, { likedByUser: boolean; likesCount: number }>,
         { targetIds: string[]; targetType: string }
       >({
+        providesTags: (result, error, { targetIds }) =>
+          targetIds.map(id => ({ id, type: 'CommentLikes' })),
         query: ({ targetIds, targetType }) => ({
           body: { targetIds },
           method: 'POST',
@@ -37,7 +39,7 @@ export const commentApi = createApi({
         { likedByUser: boolean; likesCount: number },
         { commentId: string }
       >({
-        providesTags: (result, error, { commentId }) => [{ id: commentId, type: 'Comment' }],
+        providesTags: (result, error, { commentId }) => [{ id: commentId, type: 'CommentLikes' }],
         query: ({ commentId }) => ({
           params: { targetType: 'Comment' },
           url: `/likes/${commentId}`,
@@ -48,7 +50,9 @@ export const commentApi = createApi({
         query: postId => `/comments/${postId}`,
       }),
       toggleCommentLike: builder.mutation<void, { commentId: string }>({
-        invalidatesTags: (result, error, { commentId }) => [{ id: commentId, type: 'Comment' }],
+        invalidatesTags: (result, error, { commentId }) => [
+          { id: commentId, type: 'CommentLikes' },
+        ],
         query: ({ commentId }) => ({
           body: { targetType: 'Comment' },
           method: 'POST',
@@ -58,7 +62,7 @@ export const commentApi = createApi({
     }
   },
   reducerPath: 'commentApi',
-  tagTypes: ['Comment'],
+  tagTypes: ['Comment', 'CommentLikes'],
 })
 
 export const {
