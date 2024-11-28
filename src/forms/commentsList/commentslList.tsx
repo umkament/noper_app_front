@@ -3,7 +3,14 @@ import React from 'react'
 import { Avatar } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Typography } from '@/components/ui/typography'
-import { CommentInterface } from '@/services/comment'
+import {
+  CommentInterface,
+  useGetAllCommentLikesQuery,
+  useGetCommentLikeQuery,
+  useToggleCommentLikeMutation,
+} from '@/services/comment'
+import { BsBalloonHeartFill } from 'react-icons/bs'
+import { PiHandHeartLight } from 'react-icons/pi'
 import { TbHttpDelete } from 'react-icons/tb'
 
 import s from './commentList.module.scss'
@@ -21,6 +28,13 @@ export const CommentsList: React.FC<CommentListType> = ({
   onDeleteComment,
   postAuthorId,
 }) => {
+  const commentIds = comments.map(comment => comment._id)
+  const { data: likesData, isLoading: likesLoading } = useGetAllCommentLikesQuery({
+    targetIds: commentIds,
+    targetType: 'Comment',
+  })
+  const [toggleLike] = useToggleCommentLikeMutation()
+
   return (
     <div>
       {comments && comments.length > 0 ? (
@@ -41,6 +55,20 @@ export const CommentsList: React.FC<CommentListType> = ({
             currentUser._id &&
             (comment.user._id === currentUser._id || postAuthorId === currentUser._id)
 
+          console.log('likesData: ', likesData)
+
+          const likeInfo = likesData ? likesData[comment._id] : null
+
+          console.log('likeInfo: ', likeInfo)
+
+          const handleToggleLike = async () => {
+            try {
+              await toggleLike({ commentId: comment._id }).unwrap()
+            } catch (error) {
+              console.error('Ошибка при изменении лайка:', error)
+            }
+          }
+
           return (
             <div className={s.commcont} key={comment._id}>
               <Avatar avatar={avatarUrl} className={s.avatar} />
@@ -49,6 +77,15 @@ export const CommentsList: React.FC<CommentListType> = ({
               </Typography>
               <Typography className={s.text} variant={'body1'}>
                 {comment.text || 'No text available'}
+                <div className={s.favorite} onClick={handleToggleLike}>
+                  {likeInfo?.likedByUser ? (
+                    <BsBalloonHeartFill size={11} />
+                  ) : (
+                    <PiHandHeartLight size={14} />
+                  )}
+                  {'  '}
+                  {likeInfo?.likesCount}
+                </div>
               </Typography>
               {canDelete && (
                 <Button

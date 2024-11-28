@@ -50,7 +50,7 @@ export const Post: React.FC<PostProps> = ({
   )
   const [toggleLike] = useTogglePostLikeMutation()
   const [deletePost] = useDeletePostMutation()
-  const [updatePost] = useUpdatePostMutation()
+  //const [updatePost] = useUpdatePostMutation()
   const [deleteComment, { error: deleteError, isLoading: isDeleting }] = useDeleteCommentMutation()
   const [updatedComments, setUpdatedComments] = useState(comments)
   const navigate = useNavigate()

@@ -22,14 +22,50 @@ export const commentApi = createApi({
           url: `/comment/${commentId}`,
         }),
       }),
+      getAllCommentLikes: builder.query<
+        Record<string, { likedByUser: boolean; likesCount: number }>,
+        { targetIds: string[]; targetType: string }
+      >({
+        query: ({ targetIds, targetType }) => ({
+          body: { targetIds },
+          method: 'POST',
+          params: { targetType },
+          url: `/likes/bulk`,
+        }),
+      }),
+      getCommentLike: builder.query<
+        { likedByUser: boolean; likesCount: number },
+        { commentId: string }
+      >({
+        providesTags: (result, error, { commentId }) => [{ id: commentId, type: 'Comment' }],
+        query: ({ commentId }) => ({
+          params: { targetType: 'Comment' },
+          url: `/likes/${commentId}`,
+        }),
+      }),
+
       getCommentsByPost: builder.query<CommentInterface[], string>({
         query: postId => `/comments/${postId}`,
+      }),
+      toggleCommentLike: builder.mutation<void, { commentId: string }>({
+        invalidatesTags: (result, error, { commentId }) => [{ id: commentId, type: 'Comment' }],
+        query: ({ commentId }) => ({
+          body: { targetType: 'Comment' },
+          method: 'POST',
+          url: `/like/${commentId}`,
+        }),
       }),
     }
   },
   reducerPath: 'commentApi',
-  tagTypes: ['comment'],
+  tagTypes: ['Comment'],
 })
 
-export const { useCreateCommentMutation, useDeleteCommentMutation, useGetCommentsByPostQuery } =
-  commentApi
+export const {
+  useCreateCommentMutation,
+  useDeleteCommentMutation,
+  useGetAllCommentLikesQuery,
+  useGetCommentLikeQuery,
+  useGetCommentsByPostQuery,
+  useToggleCommentLikeMutation,
+} = commentApi

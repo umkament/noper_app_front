@@ -119,6 +119,18 @@
   word-break: break-word; /* Перенос длинных слов */
 }
 
+.favorite {
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.03); /* Увеличение кнопки при наведении */
+  }
+}
+
 .delButton {
   display: flex;
   align-items: center;
