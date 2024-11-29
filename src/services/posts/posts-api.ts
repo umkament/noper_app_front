@@ -60,6 +60,9 @@ export const postsApi = createApi({
         query: () => `/posts`,
       }),
 
+      getPostsByTags: builder.query<PostInterface[], string[]>({
+        query: tags => `/posts/search?tags=${tags.join(',')}`,
+      }),
       togglePostLike: builder.mutation<void, { postId: string }>({
         invalidatesTags: (result, error, { postId }) => [{ id: postId, type: 'Post' }],
         query: ({ postId }) => ({
@@ -96,6 +99,7 @@ export const {
   useDeletePostMutation,
   useGetPostLikeQuery,
   useGetPostQuery,
+  useGetPostsByTagsQuery,
   useGetPostsQuery,
   useTogglePostLikeMutation,
   useUpdatePostMutation,
