@@ -9,7 +9,7 @@ import s from './users-page.module.scss'
 export function UsersListPage() {
   const { data: users, error, isLoading } = useGetUsersQuery()
   const [sortType, setSortType] = useState<'new' | 'old' | 'random'>('new') // По умолчанию: от новых к старым
-  const [sortedUsers, setSortedUsers] = useState(users || []) // состояние для отсортированных пользователей
+  const [sortedUsers, setSortedUsers] = useState(users || []) // остояние для отсортированных пользователей
 
   useEffect(() => {
     if (!users) {

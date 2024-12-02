@@ -10,6 +10,7 @@ import { BioPage } from './pages/bio-page '
 import { ConceptPage } from './pages/concept-page'
 import { EditProfilePage } from './pages/editProfile-page'
 import { PostPage } from './pages/post-page'
+import { SavedPage } from './pages/saved-page'
 import { SignInPage } from './pages/signIn-page'
 import { SignUpPage } from './pages/signUp-page'
 import { UserPage } from './pages/user-page'
@@ -33,6 +34,7 @@ const privateRoutes: RouteObject[] = [
   { element: <AddPostPage />, path: '/add-post' },
   { element: <AddPostPage />, path: '/edit-post/:postId' },
   { element: <EditProfilePage />, path: '/edit-profile' },
+  { element: <SavedPage />, path: '/saved' },
 ]
 
 const router = createHashRouter([

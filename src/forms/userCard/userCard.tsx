@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
+import { SaveButton } from '@/components/ui/saveButton'
 import { Typography } from '@/components/ui/typography'
 import { UserInterface, useGetUserLikeQuery, useToggleUserLikeMutation } from '@/services/users'
 import { BsBalloonHeartFill } from 'react-icons/bs'
@@ -17,7 +18,6 @@ type UserPostCardProps = {
 }
 
 export const UserCard: React.FC<UserPostCardProps> = ({ user }) => {
-  const random = () => Math.random() < 0.5
   const skipQuery = !user._id
   const { data: likesData } = useGetUserLikeQuery({ userId: user._id! }, { skip: skipQuery })
   const [toggleLike] = useToggleUserLikeMutation()
@@ -54,9 +54,7 @@ export const UserCard: React.FC<UserPostCardProps> = ({ user }) => {
           </Typography>
         </Link>
         <div className={s.smllbtns}>
-          <Button className={s.discipline} variant={'icon'}>
-            {random() ? <GiBinoculars size={22} /> : <CiBookmarkPlus size={22} />}
-          </Button>
+          <SaveButton itemId={user._id} type={'user'} />
           <Button className={s.favorite} onClick={handleToggleLike} variant={'icon'}>
             {likesData?.likedByUser ? (
               <BsBalloonHeartFill size={22} />

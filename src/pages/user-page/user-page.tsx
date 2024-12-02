@@ -9,6 +9,7 @@ import { PostInterface } from '@/services/posts'
 import { UserInterface, useGetUserPostsQuery, useGetUserQuery } from '@/services/users'
 import { FaRegEdit } from 'react-icons/fa'
 import { GrTextWrap } from 'react-icons/gr'
+import { TfiSave } from 'react-icons/tfi'
 
 import s from './user-page.module.scss'
 
@@ -118,10 +119,16 @@ export const UserPageContent: React.FC<UserProps> = ({ posts, user, userId }) =>
         </div>
       </div>
       {isCurrentUser && (
-        <Button as={Link} to={'/add-post'}>
-          добавить статью
-          <GrTextWrap />
-        </Button>
+        <div>
+          <Button as={Link} to={'/add-post'}>
+            добавить статью
+            <GrTextWrap />
+          </Button>
+          <Button as={Link} to={'/saved'}>
+            сохраненное
+            <TfiSave />
+          </Button>
+        </div>
       )}
 
       <div className={postsBlockClass}>

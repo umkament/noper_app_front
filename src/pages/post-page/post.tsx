@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import postImg from '@/assets/userPhoto.jpg'
 import { Avatar } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
+import { SaveButton } from '@/components/ui/saveButton'
 import { Typography } from '@/components/ui/typography'
 import { AddCommentForm } from '@/forms/addCommentForm/addCommentForm'
 import { CommentsList } from '@/forms/commentsList/commentslList'
@@ -140,6 +141,7 @@ export const Post: React.FC<PostProps> = ({
           <Button as={Link} to={`/user/${post.user._id}`} variant={'icon'}>
             <Avatar avatar={avatarImage} />
           </Button>
+          <SaveButton itemId={postId!} type={'post'} />
           <Typography className={s.view}>
             <span className={s.viewsCount}>{post.viewsCount}</span>
             <FaRegEye className={s.eyeIcon} size={21} />
