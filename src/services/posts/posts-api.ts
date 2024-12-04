@@ -13,6 +13,9 @@ export const postsApi = createApi({
   endpoints: builder => {
     return {
       createPost: builder.mutation({
+        invalidatesTags: (result, error, { userId }) => [
+          { id: userId, type: 'UserPosts' }, // Указываем тег пользователя
+        ],
         query: postData => {
           return {
             body: postData, // Текстовые данные (title, text, tags)

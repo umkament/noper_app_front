@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 
 import { NPlogo, logoUR } from '@/assets'
@@ -19,7 +19,13 @@ import { Avatar } from '../ui/avatar'
 export const Layout = () => {
   const [menuOpen, setMenuOpen] = useState(false)
 
-  const { data: userData, isLoading } = useAuthMeQuery()
+  const {
+    data: userData,
+    isLoading,
+    refetch,
+  } = useAuthMeQuery(undefined, {
+    pollingInterval: 60000,
+  })
   const [logoutUser] = useLogoutUserMutation()
   const navigate = useNavigate()
 

@@ -19,3 +19,5 @@ export interface NoPostsResponce {
 }
 
 export type UserPostsResponce = NoPostsResponce | PostInterface[]
+
+// export type UserPostsResponce = PostInterface[]

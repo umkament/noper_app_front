@@ -9,7 +9,9 @@ import s from './addCommentForm.module.scss'
 
 // Импортируем API
 type AddCommentFormType = {
+  //onAddComment: (newComment: CommentInterface) => void
   onAddComment: (newComment: CommentInterface) => void
+
   postId?: string | undefined
 }
 

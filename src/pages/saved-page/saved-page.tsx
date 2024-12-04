@@ -53,8 +53,8 @@ export const SavedPage: React.FC = () => {
         </Typography>
         {savedUsers.length > 0 ? (
           <ul>
-            {usersWithDetails.map(({ id, itemId, userDetails }) => (
-              <li className={s.userItem} key={id}>
+            {usersWithDetails.map(({ itemId, userDetails }) => (
+              <li className={s.userItem} key={itemId}>
                 <div className={s.userInfo}>
                   {userDetails ? (
                     <Button as={Link} to={`/user/${userDetails._id}`}>
@@ -92,8 +92,8 @@ export const SavedPage: React.FC = () => {
         </Typography>
         {savedPosts.length > 0 ? (
           <ul>
-            {postsWithDetails.map(({ id, itemId, postDetails }) => (
-              <li className={s.postItem} key={id}>
+            {postsWithDetails.map(({ itemId, postDetails }) => (
+              <li className={s.postItem} key={itemId}>
                 <Button
                   className={s.toggleBtn}
                   disabled={isToggling}

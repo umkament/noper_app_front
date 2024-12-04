@@ -21,6 +21,18 @@ export const usersApi = createApi({
         }),
       }),
       getUserPosts: builder.query<UserPostsResponce, string>({
+        providesTags: (result, error, userId) => {
+          if (Array.isArray(result)) {
+            // Если результат — массив постов
+            return [
+              ...result.map(post => ({ id: post._id, type: 'Post' as const })), // Теги для каждого поста
+              { id: userId, type: 'UserPosts' as const }, // Тег для списка постов пользователя
+            ]
+          }
+
+          // Если результат — NoPostsResponse
+          return [{ id: userId, type: 'UserPosts' as const }]
+        },
         query: userId => `/user/${userId}/posts`,
       }),
       getUsers: builder.query<UserInterface[], void>({
@@ -37,7 +49,7 @@ export const usersApi = createApi({
     }
   },
   reducerPath: 'usersApi',
-  tagTypes: ['User'],
+  tagTypes: ['User', 'Post', 'UserPosts'],
 })
 
 export const {

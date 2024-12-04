@@ -9,7 +9,11 @@ import { SaveButton } from '@/components/ui/saveButton'
 import { Typography } from '@/components/ui/typography'
 import { AddCommentForm } from '@/forms/addCommentForm/addCommentForm'
 import { CommentsList } from '@/forms/commentsList/commentslList'
-import { CommentInterface, useDeleteCommentMutation } from '@/services/comment'
+import {
+  CommentInterface,
+  useCreateCommentMutation,
+  useDeleteCommentMutation,
+} from '@/services/comment'
 import {
   PostInterface,
   useDeletePostMutation,
@@ -31,7 +35,7 @@ interface PostProps {
   comments: CommentInterface[]
   commentsRefetch: () => void
   currentUser: UserInterface | null | undefined
-  onAddComment: (newComment: CommentInterface) => void
+  //onAddComment: (newComment: CommentInterface) => void
   post: PostInterface
   postId: string | undefined
 }
@@ -40,7 +44,7 @@ export const Post: React.FC<PostProps> = ({
   comments,
   commentsRefetch,
   currentUser,
-  onAddComment,
+  // onAddComment,
   post,
   postId,
 }) => {
@@ -51,9 +55,10 @@ export const Post: React.FC<PostProps> = ({
   )
   const [toggleLike] = useTogglePostLikeMutation()
   const [deletePost] = useDeletePostMutation()
-  //const [updatePost] = useUpdatePostMutation()
+
   const [deleteComment, { error: deleteError, isLoading: isDeleting }] = useDeleteCommentMutation()
-  const [updatedComments, setUpdatedComments] = useState(comments)
+  const [createComment] = useCreateCommentMutation()
+  const [updatedComments, setUpdatedComments] = useState(comments || [])
   const navigate = useNavigate()
   const { refetch } = useGetUserPostsQuery(currentUser?._id || '')
 
@@ -69,33 +74,11 @@ export const Post: React.FC<PostProps> = ({
     }
   }
 
-  //   const handleEditPost = async () => {
-  //     const newTitle = prompt('Введите новый заголовок:', post.title)
-  //     const newText = prompt('Введите новый текст:', post.text)
-
-  //     if (newTitle && newText) {
-  //       try {
-  //         await updatePost({
-  //           data: { text: newText, title: newTitle },
-  //           postId: postId!,
-  //         }).unwrap()
-  //         alert('Статья успешно обновлена')
-  //       } catch (error) {
-  //         console.error('Ошибка при обновлении статьи:', error)
-  //         alert('Не удалось обновить статью')
-  //       }
-  //     }
-  //   }
-
   const handleEditPost = () => {
     navigate(`/edit-post/${postId}`)
   }
 
   const isAuthor = currentUser?._id === post.user._id
-
-  useEffect(() => {
-    setUpdatedComments(comments)
-  }, [comments])
 
   const handleToggleLike = async () => {
     try {
@@ -105,10 +88,14 @@ export const Post: React.FC<PostProps> = ({
     }
   }
 
+  useEffect(() => {
+    setUpdatedComments(comments)
+  }, [comments])
+
   const handleDeleteComment = async (commentId: string) => {
-    console.log('Удаление комментария с ID:', commentId) // Отладка
-    setUpdatedComments(prevComments => prevComments.filter(comment => comment._id !== commentId))
     try {
+      console.log('Удаление комментария с ID:', commentId) // Отладка
+      setUpdatedComments(prevComments => prevComments?.filter(comment => comment._id !== commentId))
       await deleteComment(commentId).unwrap()
       // После успешного удаления, обновляем состояние комментариев
       if (postId) {
@@ -118,6 +105,25 @@ export const Post: React.FC<PostProps> = ({
     } catch (error) {
       console.error('Ошибка при удалении комментария', error)
     }
+  }
+
+  //   const handleAddComment = async (text: string) => {
+  //     if (!postId) {
+  //       return
+  //     }
+
+  //     try {
+  //      const newComment = await createComment({ postId, text }).unwrap()
+
+  //       setUpdatedComments(prev => [...(prev || []), newComment]) // Локальное обновление состояния
+  //       commentsRefetch() // Для полной синхронизации с сервером
+  //     } catch (error) {
+  //       console.error('Ошибка при добавлении комментария', error)
+  //     }
+  //   }
+
+  const handleAddComment = (newComment: CommentInterface) => {
+    setUpdatedComments(prevComment => [...prevComment, newComment])
   }
 
   if (likesLoading) {
@@ -186,7 +192,7 @@ export const Post: React.FC<PostProps> = ({
         </div>
       )}
       <div className={s.commentWrap}>
-        <AddCommentForm onAddComment={onAddComment} postId={postId} />
+        <AddCommentForm onAddComment={handleAddComment} postId={postId} />
         <CommentsList
           comments={updatedComments}
           currentUser={currentUser}

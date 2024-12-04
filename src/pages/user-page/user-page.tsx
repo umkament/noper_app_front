@@ -22,6 +22,7 @@ export const UserPage = () => {
     data: responceData,
     error: postsError,
     isLoading: isPostsLoading,
+    refetch,
   } = useGetUserPostsQuery(userId || '')
 
   const posts = Array.isArray(responceData) ? responceData : responceData?.posts || []
@@ -42,7 +43,7 @@ export const UserPage = () => {
   }
 
   return user ? (
-    <UserPageContent posts={posts || []} user={user} userId={userId} />
+    <UserPageContent posts={posts || []} refetch={refetch} user={user} userId={userId} />
   ) : (
     <Typography variant={'h2'}>User not found</Typography>
   )
@@ -50,6 +51,7 @@ export const UserPage = () => {
 
 interface UserProps {
   posts: PostInterface[]
+  refetch: () => void
   user: UserInterface
   userId: string
 }

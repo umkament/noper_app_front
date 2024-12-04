@@ -16,7 +16,7 @@ import { TbHttpDelete } from 'react-icons/tb'
 import s from './commentList.module.scss'
 
 type CommentListType = {
-  comments: CommentInterface[]
+  comments: CommentInterface[] | undefined
   currentUser: { _id: string } | null | undefined // Добавляем информацию о текущем пользователе
   onDeleteComment: (commentId: string) => void
   postAuthorId: string //id автора статьи
@@ -28,7 +28,7 @@ export const CommentsList: React.FC<CommentListType> = ({
   onDeleteComment,
   postAuthorId,
 }) => {
-  const commentIds = comments.map(comment => comment._id)
+  const commentIds = comments?.map(comment => comment._id)
   const { data: likesData, isLoading: likesLoading } = useGetAllCommentLikesQuery({
     targetIds: commentIds,
     targetType: 'Comment',

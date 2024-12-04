@@ -25,6 +25,9 @@ export const SignUpPage = () => {
   const onSubmit = async (data: SignUpFormSchema) => {
     try {
       await registerUser(data).unwrap()
+      alert(
+        'Ваш аккаунт успешно создан! Надеемся, Вы не забыли e-mail, который ввели при регистрации'
+      )
       navigate('/auth/login')
     } catch (err: any) {
       // Обрабатываем ошибку, отправленную с сервера

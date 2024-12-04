@@ -22,6 +22,7 @@ import 'highlight.js/styles/atom-one-dark.css'
 import 'highlight.js/styles/github.css' // Вы можете выбрать другой стиль, если хотите
 
 import { Typography } from '@/components/ui/typography'
+import { useGetUserPostsQuery } from '@/services/users'
 
 import 'simplemde/dist/simplemde.min.css'
 
@@ -34,6 +35,7 @@ export const AddPostPage = () => {
   const [uploadImage] = useUploadImageMutation()
   const { data: post } = useGetPostQuery(postId, { skip: !postId })
   const { data: user } = useAuthMeQuery()
+  const { data: userPosts, refetch } = useGetUserPostsQuery(user?._id || '')
   const navigate = useNavigate()
 
   const [title, setTitle] = useState('')
@@ -160,7 +162,9 @@ export const AddPostPage = () => {
         alert('Пост успешно создан!')
         navigate(`/post/${newPost._id}`)
       }
-
+      if (refetch) {
+        refetch()
+      }
       navigate(`/user/${user?._id}`)
     } catch (error) {
       console.error('Ошибка при сохранении поста:', error)
@@ -202,11 +206,6 @@ export const AddPostPage = () => {
         value={tags}
       />
       <SimpleMDE className={s.editor} onChange={onChange} options={options} value={text} />
-
-      {/* <div className={s.previewContainer}>
-        <h3>Превью:</h3>
-        <div className={s.preview} dangerouslySetInnerHTML={{ __html: marked(text) }} />
-      </div> */}
 
       <div className={s.previewWrap}>
         <Typography variant={'h2'}>Предварительный просмотр</Typography>

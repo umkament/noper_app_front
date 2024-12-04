@@ -23,8 +23,6 @@ export const PostPage = () => {
     refetchOnMountOrArgChange: true,
   })
 
-  console.log('currentUser from useAuthMeQuery:', currentUser)
-
   // Если postId отсутствует, передаем в useGetPostQuery skipToken, чтобы пропустить выполнение запроса
   const {
     data: post,
@@ -39,18 +37,18 @@ export const PostPage = () => {
     refetch: commentsRefetch,
   } = useGetCommentsByPostQuery(postId ?? skipToken)
 
-  const [comments, setComments] = useState(commentsData || [])
+  // const [comments, setComments] = useState(commentsData || [])
 
-  useEffect(() => {
-    if (commentsData) {
-      console.log('Полученные комментарии:', commentsData)
-      setComments(commentsData)
-    }
-  }, [commentsData])
+  // useEffect(() => {
+  //   if (commentsData) {
+  //     console.log('Полученные комментарии:', commentsData)
+  //     setComments(commentsData)
+  //   }
+  // }, [commentsData])
 
-  const handleAddComment = (newComment: CommentInterface) => {
-    setComments([...comments, newComment])
-  }
+  // const handleAddComment = (newComment: CommentInterface) => {
+  //   setComments(prevComment => [...prevComment, newComment])
+  // }
 
   useEffect(() => {
     if (postId && commentsRefetch) {
@@ -71,10 +69,10 @@ export const PostPage = () => {
 
   return post ? (
     <Post
-      comments={comments}
+      comments={commentsData}
       commentsRefetch={commentsRefetch}
       currentUser={currentUser}
-      onAddComment={handleAddComment}
+      // onAddComment={handleAddComment}
       post={post}
       postId={postId}
     />
