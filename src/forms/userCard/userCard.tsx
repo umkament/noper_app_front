@@ -57,9 +57,9 @@ export const UserCard: React.FC<UserPostCardProps> = ({ user }) => {
           <SaveButton itemId={user._id} type={'user'} />
           <Button className={s.favorite} onClick={handleToggleLike} variant={'icon'}>
             {likesData?.likedByUser ? (
-              <BsBalloonHeartFill size={22} />
+              <BsBalloonHeartFill size={20} />
             ) : (
-              <PiHandHeartLight size={22} />
+              <PiHandHeartLight size={21} />
             )}
             {likesData?.likesCount}
           </Button>

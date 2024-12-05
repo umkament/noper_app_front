@@ -4,6 +4,8 @@ import { useGetSavedQuery, useToggleSavedMutation } from '@/services/saved'
 import { CiBookmarkPlus } from 'react-icons/ci'
 import { GiBinoculars } from 'react-icons/gi'
 
+import s from './saveButton.module.scss'
+
 import { Button } from '../button'
 
 interface SaveButtonProps {
@@ -37,7 +39,7 @@ export const SaveButton: React.FC<SaveButtonProps> = ({ itemId, type }) => {
   }
 
   return (
-    <Button disabled={isLoading || isToggling} onClick={handleClick}>
+    <Button className={s.saved} disabled={isLoading || isToggling} onClick={handleClick}>
       {isSaved ? <GiBinoculars size={22} /> : <CiBookmarkPlus size={22} />}
     </Button>
   )
