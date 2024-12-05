@@ -9,6 +9,7 @@ import { Header } from '@/components/ui/header'
 import { useAuthMeQuery, useLogoutUserMutation } from '@/services/auth'
 import { FaPeopleRobbery } from 'react-icons/fa6'
 import { GiNewspaper } from 'react-icons/gi'
+import { GiExitDoor } from 'react-icons/gi'
 import { GoInfo } from 'react-icons/go'
 import { PiAtomLight } from 'react-icons/pi'
 
@@ -60,7 +61,8 @@ export const Layout = () => {
               <Link className={s.linkOff} to={'/'}>
                 <Button variant={'icon'}>
                   <li className={s.list_item}>
-                    <GiNewspaper className={s.icons} /> <span className={s.text}>лента</span>
+                    <GiNewspaper className={s.icons} size={21} />{' '}
+                    <span className={s.text}>лента</span>
                   </li>
                 </Button>
               </Link>
@@ -68,7 +70,7 @@ export const Layout = () => {
               <Link className={s.linkOff} to={'/users'}>
                 <Button variant={'icon'}>
                   <li className={s.list_item}>
-                    <FaPeopleRobbery className={s.icons} />{' '}
+                    <FaPeopleRobbery className={s.icons} size={21} />{' '}
                     <span className={s.text}>пользователи</span>
                   </li>
                 </Button>
@@ -77,7 +79,8 @@ export const Layout = () => {
               <Link className={s.linkOff} to={'/concept'}>
                 <Button variant={'icon'}>
                   <li className={s.list_item}>
-                    <PiAtomLight className={s.icons} /> <span className={s.text}>концепция</span>
+                    <PiAtomLight className={s.icons} size={21} />{' '}
+                    <span className={s.text}>концепция</span>
                   </li>
                 </Button>
               </Link>
@@ -85,7 +88,7 @@ export const Layout = () => {
               <Link className={s.linkOff} to={'/bio'}>
                 <Button variant={'icon'}>
                   <li className={s.list_item}>
-                    <GoInfo className={s.icons} /> <span className={s.text}>bio</span>
+                    <GoInfo className={s.icons} size={21} /> <span className={s.text}>bio</span>
                   </li>
                 </Button>
               </Link>
@@ -130,7 +133,8 @@ export const Layout = () => {
             </DropDownMenu>
           ) : (
             <Button as={Link} to={'/auth/login'} variant={'primary'}>
-              Вход / Регистрация
+              <GiExitDoor className={s.iconDoor} size={26} />{' '}
+              <span className={s.textLogOut}>Вход / Регистрация</span>
             </Button>
           )}
         </div>
