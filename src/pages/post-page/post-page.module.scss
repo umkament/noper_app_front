@@ -27,10 +27,13 @@
 
 .info {
   display: flex;
-  justify-content: space-between;
+  align-items: center; /* Выравнивание всех элементов по центру по вертикали */
+  justify-content: space-between; /* Равномерное распределение кнопок */
+  margin: 0 0.1rem; /* Отступ между элементами (опционально) */
 
   .view,
   .date {
+    margin: 0;
     font-size: 1rem;
     color: var(--color-light-900);
   }
@@ -38,14 +41,25 @@
   .view {
     display: flex;
     align-items: center;
+    margin: 0;
   }
 
   .viewsCount {
-    margin-right: 0.2rem;
+    margin-right: 0.15rem;
+    font-size: 1rem;
+    color: var(--color-light-900);
   }
 
   .eyeIcon {
-    margin-bottom: 0.5rem;
+  }
+
+  .saved {
+    transform: translateY(-50%); /* Смещаем кнопку обратно вверх на половину её отступа */
+  }
+
+  .favorite {
+    padding: 0 0.6rem;
+    font-size: 0.8rem;
   }
 }
 
@@ -105,4 +119,17 @@
   justify-content: center;
   font-size: 0.8rem;
   color: var(--color-dark-100) !important;
+}
+
+.info > * {
+  display: flex;
+  align-items: center; /* Выровнять содержимое всех дочерних элементов по вертикали */
+  height: 40px; /* Убедитесь, что высота одинаковая */
+}
+
+@media (width <= 680px) {
+  .mainContainer {
+    padding-right: 1rem; /* Отступы справа */
+    padding-left: 1rem; /* Отступы слева */
+  }
 }

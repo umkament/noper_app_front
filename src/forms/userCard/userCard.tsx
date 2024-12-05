@@ -54,7 +54,10 @@ export const UserCard: React.FC<UserPostCardProps> = ({ user }) => {
           </Typography>
         </Link>
         <div className={s.smllbtns}>
-          <SaveButton itemId={user._id} type={'user'} />
+          <Typography className={s.saved}>
+            <SaveButton className={s.saved} itemId={user._id} type={'user'} />
+          </Typography>
+
           <Button className={s.favorite} onClick={handleToggleLike} variant={'icon'}>
             {likesData?.likedByUser ? (
               <BsBalloonHeartFill size={20} />

@@ -107,21 +107,6 @@ export const Post: React.FC<PostProps> = ({
     }
   }
 
-  //   const handleAddComment = async (text: string) => {
-  //     if (!postId) {
-  //       return
-  //     }
-
-  //     try {
-  //      const newComment = await createComment({ postId, text }).unwrap()
-
-  //       setUpdatedComments(prev => [...(prev || []), newComment]) // Локальное обновление состояния
-  //       commentsRefetch() // Для полной синхронизации с сервером
-  //     } catch (error) {
-  //       console.error('Ошибка при добавлении комментария', error)
-  //     }
-  //   }
-
   const handleAddComment = (newComment: CommentInterface) => {
     setUpdatedComments(prevComment => [...prevComment, newComment])
   }
@@ -147,16 +132,19 @@ export const Post: React.FC<PostProps> = ({
           <Button as={Link} to={`/user/${post.user._id}`} variant={'icon'}>
             <Avatar avatar={avatarImage} />
           </Button>
-          <SaveButton itemId={postId!} type={'post'} />
+          <div className={s.saved}>
+            <SaveButton itemId={postId!} type={'post'} />
+          </div>
+
           <Typography className={s.view}>
-            <span className={s.viewsCount}>{post.viewsCount}</span>
-            <FaRegEye className={s.eyeIcon} size={21} />
+            <Typography className={s.viewsCount}>{post.viewsCount}</Typography>
+            <FaRegEye className={s.eyeIcon} size={17} />
           </Typography>
           <Button className={s.favorite} onClick={handleToggleLike} variant={'icon'}>
             {likesData?.likedByUser ? (
-              <BsBalloonHeartFill size={22} />
+              <BsBalloonHeartFill size={20} />
             ) : (
-              <PiHandHeartLight size={22} />
+              <PiHandHeartLight size={20} />
             )}
             {likesData?.likesCount}
           </Button>

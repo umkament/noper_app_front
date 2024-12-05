@@ -37,19 +37,6 @@ export const PostPage = () => {
     refetch: commentsRefetch,
   } = useGetCommentsByPostQuery(postId ?? skipToken)
 
-  // const [comments, setComments] = useState(commentsData || [])
-
-  // useEffect(() => {
-  //   if (commentsData) {
-  //     console.log('Полученные комментарии:', commentsData)
-  //     setComments(commentsData)
-  //   }
-  // }, [commentsData])
-
-  // const handleAddComment = (newComment: CommentInterface) => {
-  //   setComments(prevComment => [...prevComment, newComment])
-  // }
-
   useEffect(() => {
     if (postId && commentsRefetch) {
       commentsRefetch()
