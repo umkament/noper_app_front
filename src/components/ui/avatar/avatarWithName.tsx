@@ -1,10 +1,12 @@
+import React from 'react'
+
 import s from './avatar.module.scss'
 
 import { Avatar } from './avatar'
 
 type Props = {
   avatar: string
-  name: string
+  name?: React.ReactNode
 }
 export const AvatarWithName = ({ avatar, name }: Props) => {
   return (

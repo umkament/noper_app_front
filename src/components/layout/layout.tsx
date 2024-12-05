@@ -16,6 +16,7 @@ import { PiAtomLight } from 'react-icons/pi'
 import s from './layout.module.scss'
 
 import { Avatar } from '../ui/avatar'
+import { Typography } from '../ui/typography'
 
 export const Layout = () => {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -107,7 +108,7 @@ export const Layout = () => {
                       ? `http://localhost:4411${userData.avatarUrl}`
                       : `https://robohash.org/${userData?.username}.png`
                   }
-                  name={userData.username}
+                  name={<Typography className={s.name}>{userData.username}</Typography>}
                 />
               }
             >
