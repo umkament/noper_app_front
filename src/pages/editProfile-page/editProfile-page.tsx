@@ -14,6 +14,7 @@ import {
   useUpdateUserProfileMutation,
   useUploadAvatarMutation,
 } from '@/services/auth'
+import { FaTrashCan } from 'react-icons/fa6'
 import { LiaHandPointer } from 'react-icons/lia'
 import { MdAddAPhoto, MdOutlineAddAPhoto } from 'react-icons/md'
 
@@ -175,12 +176,14 @@ export const EditProfilePage = () => {
             <img alt={'avatar'} className={s.avatarStyle} src={getAvatarSrc()} />
             <div>
               <Button className={s.buttonStyle} onClick={handleButtonClick} type={'button'}>
-                добавить аватар <MdAddAPhoto />
+                <Typography className={s.btnText}>добавить аватар</Typography>
+                <MdAddAPhoto size={20} />
               </Button>
               <input hidden onChange={handleFileChange} ref={inputFileRef} type={'file'} />
               {avatarPreview && (
-                <Button onClick={handleDeleteAvatar} type={'button'}>
-                  удалить аватар <MdOutlineAddAPhoto />
+                <Button className={s.buttonStyle} onClick={handleDeleteAvatar} type={'button'}>
+                  <Typography className={s.btnText}>удалить аватар</Typography>
+                  <FaTrashCan size={20} />
                 </Button>
               )}
             </div>
