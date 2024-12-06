@@ -60,10 +60,26 @@
     .editor-toolbar {
       color: black;
       background: linear-gradient(90deg, #efefef 55%, var(--color-accent-500) 70%);
-
-      //background-color: #efefef;
       border: 0;
       border-radius: 5px 5px 0 0;
+    }
+
+    .editor-toolbar button {
+      min-width: 2.5rem; /* Устанавливаем минимальную ширину кнопок */
+      margin: 0 0.1rem 0.3rem 0; /* Добавляем внутренние отступы */
+
+      color: var(--color-accent-100);
+
+      background-color: var(--color-dark-500); /* Цвет кнопок */
+      border: 1px solid var(--color-accent-100);
+      border-radius: 0.1rem;
+
+      transition: background-color 0.3s ease; /* Анимация при наведении */
+    }
+
+    .editor-toolbar button:hover {
+      color: var(--color-dark-500);
+      background-color: var(--color-primary-200);
     }
   }
 }
@@ -154,7 +170,6 @@
 @media (width <= 460px) {
   .container {
     gap: 1rem; /* Уменьшаем промежутки между элементами */
-    margin-left: 2rem;
   }
 
   .illustrator {
