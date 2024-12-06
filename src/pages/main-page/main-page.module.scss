@@ -9,3 +9,10 @@
   margin-bottom: 6rem;
   padding-top: 110px;
 }
+
+@media (width <= 670px) {
+  .container {
+    padding-right: 1rem; /* Отступы справа */
+    padding-left: 1rem; /* Отступы слева */
+  }
+}

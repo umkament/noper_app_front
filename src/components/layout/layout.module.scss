@@ -8,7 +8,7 @@
   max-width: 1280px;
   height: 100%;
   margin: 0 auto;
-  padding: 0 5px;
+  padding: 0 0.6rem;
 
   background-color: var(--color-dark-700);
   border-bottom: 1.5px solid var(--color-dark-500);
@@ -17,6 +17,7 @@
     position: relative;
     z-index: 78;
     height: 90px;
+    margin-right: 0.3rem;
 
     // border-radius: 50%;
     // box-shadow: -5px 3px 10px var(--color-dark-300);
@@ -24,7 +25,6 @@
 
   .header_nav {
     flex: auto;
-    margin-top: 2%;
 
     .list_menu {
       cursor: pointer;
@@ -57,6 +57,17 @@
   margin-right: 0.5rem;
 }
 
+.name {
+  overflow: hidden; /* Обрезаем лишний текст */
+
+  max-width: 9ch; /* Ограничиваем длину текста до 9 символов */
+
+  font-size: var(--font-size-m); /* Размер шрифта, как вам нужно */
+  color: var(--color-light-700); /* Цвет текста */
+  text-overflow: ellipsis; /* Добавляем многоточие */
+  white-space: nowrap; /* Запрещаем перенос текста на новую строку */
+}
+
 @media (width <= 746px) {
   .text {
     display: none;
@@ -67,7 +78,7 @@
   }
 }
 
-@media (width <= 460px) {
+@media (width <= 480px) {
   .textLogOut {
     display: none;
   }

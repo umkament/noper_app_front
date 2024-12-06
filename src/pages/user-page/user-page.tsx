@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 
 import postImg from '@/assets/userPhoto.jpg'
@@ -7,9 +7,9 @@ import { Typography } from '@/components/ui/typography'
 import { useAuthMeQuery } from '@/services/auth'
 import { PostInterface } from '@/services/posts'
 import { UserInterface, useGetUserPostsQuery, useGetUserQuery } from '@/services/users'
-import { FaRegEdit } from 'react-icons/fa'
-import { GrTextWrap } from 'react-icons/gr'
-import { TfiSave } from 'react-icons/tfi'
+import { BsBookmarksFill } from 'react-icons/bs'
+import { PiDotsThreeCircle } from 'react-icons/pi'
+import { SiReaddotcv } from 'react-icons/si'
 
 import s from './user-page.module.scss'
 
@@ -111,24 +111,22 @@ export const UserPageContent: React.FC<UserProps> = ({ posts, user, userId }) =>
               {user.link}
             </Typography>
           )}
-          <div className={s.buttonStyle}>
-            {isCurrentUser && (
-              <Button as={Link} to={`/edit-profile`} variant={'tertiary'}>
-                редактировать профиль <FaRegEdit />
-              </Button>
-            )}
-          </div>
         </div>
       </div>
       {isCurrentUser && (
         <div>
           <Button as={Link} to={'/add-post'}>
-            добавить статью
-            <GrTextWrap />
+            <Typography className={s.btntext}>добавить статью</Typography>
+            <SiReaddotcv size={22} />
+            {/* <GrTextWrap size={22} /> */}
           </Button>
           <Button as={Link} to={'/saved'}>
-            сохраненное
-            <TfiSave />
+            <Typography className={s.btntext}>сохраненное</Typography>
+            <BsBookmarksFill size={22} />
+          </Button>
+          <Button as={Link} to={`/edit-profile`}>
+            <Typography className={s.btntext}>редактировать</Typography>
+            <PiDotsThreeCircle size={22} />
           </Button>
         </div>
       )}

@@ -52,10 +52,17 @@
     }
 
     .userName {
+      overflow: hidden; /* Обрезаем лишний текст */
+
+      max-width: 15ch; /* Ограничиваем длину текста до 9 символов */ /* Размер шрифта, как вам нужно */
       margin-top: 1.6rem;
       margin-bottom: 0.21rem;
+
       font-size: 1.6rem;
+      line-height: var(--line-height-l);
       color: var(--color-light-900);
+      text-overflow: ellipsis; /* Добавляем многоточие */
+      white-space: nowrap; /* Запрещаем перенос текста на новую строку */
     }
 
     .name {
