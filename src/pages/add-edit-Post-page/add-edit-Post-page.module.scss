@@ -8,9 +8,9 @@
   max-width: 900px;
   height: auto;
   margin: auto;
-  margin-bottom: 6rem;
+  margin-bottom: 4rem;
+  padding: 2rem 1rem; /* Увеличено для удобства на мобильных устройствах */
   padding-top: 120px;
-  padding-bottom: 1rem;
 
   background: linear-gradient(60deg, var(--color-dark-900) 5%, var(--color-dark-700) 100%);
   border-radius: 2%;
@@ -24,31 +24,30 @@
   align-items: center;
   justify-content: center;
 
-  width: 100%; /* Установите желаемую ширину */
-  height: 400px; /* Установите желаемую высоту */
+  aspect-ratio: 16 / 9; /* Устанавливаем пропорции для адаптивности */
+  width: 100%; /* Занимает всю ширину */
+  max-width: 800px; /* Ограничение ширины для больших экранов */
+  height: auto; /* Автоматическая высота */
 
   background-position: center;
   background-size: cover;
-
-  // width: 90%;
-  // height: 250px;
-  // margin: auto;
-
   border: 0.1rem solid var(--color-dark-100);
   border-radius: 5px;
 }
 
-.illustrator img {
-  display: none;
-}
+// .illustrator img {
+//   display: none;
+// }
 
 .title,
 .tags {
-  width: 90%;
+  width: 100%; /* Полная ширина */
+  max-width: 800px; /* Ограничение ширины */
 }
 
 .editor {
-  width: 90%;
+  width: 100%;
+  max-width: 800px;
 
   :global {
     .cm-s-easymde {
@@ -111,17 +110,59 @@
 }
 
 .previewWrap {
-  width: 640px;
+  width: 100%; /* Полная ширина */
+  max-width: 800px; /* Ограничение ширины */
   margin-top: 2rem;
 }
 
+.previewTitle {
+  color: var(--color-light-900);
+}
+
 .previewContent {
+  overflow-x: hidden; /* Убираем горизонтальную прокрутку */
+
   padding: 1rem;
 
   color: var(--color-light-900);
+  word-wrap: break-word; /* Предотвращает выход слов за пределы */
+  overflow-wrap: break-word; /* Альтернативная поддержка для переноса текста */
 
   background: linear-gradient(var(--color-dark-700) 50%, var(--color-accent-700) 450%);
   border: 0.1rem solid var(--color-dark-100);
   border-radius: 0.1rem;
   box-shadow: 0 4px 8px 5px var(--color-dark-900);
+}
+
+@media (width <= 768px) {
+  .container {
+    margin-bottom: 4rem;
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
+
+  .illustrator {
+    aspect-ratio: 4 / 3; /* Пропорции для планшетов */
+    height: auto;
+  }
+
+  .previewWrap {
+    max-width: 100%; /* На планшетах и мобильных — полная ширина */
+  }
+}
+
+@media (width <= 460px) {
+  .container {
+    gap: 1rem; /* Уменьшаем промежутки между элементами */
+    margin-left: 2rem;
+  }
+
+  .illustrator {
+    aspect-ratio: 1 / 1; /* Пропорции для маленьких экранов */
+  }
+
+  .previewContent {
+    padding: 0.5rem; /* Уменьшаем внутренние отступы */
+    font-size: 14px; /* Меньше шрифт для мобильных устройств */
+  }
 }

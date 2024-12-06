@@ -27,6 +27,10 @@
   border: 0.2rem solid var(--color-dark-500);
   border-radius: 2%;
   box-shadow: 5px 13px 10px var(--color-dark-900);
+
+  @media (width <= 420px) {
+    width: calc(100% - 4rem); /* Отступы справа и слева */
+  }
 }
 
 .formWrapper {

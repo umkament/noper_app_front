@@ -26,9 +26,9 @@ import { useGetUserPostsQuery } from '@/services/users'
 
 import 'simplemde/dist/simplemde.min.css'
 
-import s from './addPost-page.module.scss'
+import s from './add-edit-Post-page.module.scss'
 
-export const AddPostPage = () => {
+export const AddEditPostPage = () => {
   const { postId } = useParams<{ postId: string }>()
   const [createPost] = useCreatePostMutation()
   const [updatePost] = useUpdatePostMutation()
@@ -208,7 +208,9 @@ export const AddPostPage = () => {
       <SimpleMDE className={s.editor} onChange={onChange} options={options} value={text} />
 
       <div className={s.previewWrap}>
-        <Typography variant={'h2'}>Предварительный просмотр</Typography>
+        <Typography className={s.previewTitle} variant={'h2'}>
+          Предварительный просмотр:
+        </Typography>
         <div className={s.previewContent}>
           {/* Здесь рендерим Markdown с подсветкой синтаксиса */}
           <ReactMarkdown rehypePlugins={[rehypeHighlight]}>{text}</ReactMarkdown>
@@ -218,7 +220,7 @@ export const AddPostPage = () => {
       <div>
         <Button type={'submit'}>{isEdit ? 'Сохранить изменения' : 'Опубликовать статью'}</Button>
         <Button as={Link} to={`/user/${user?._id}`}>
-          Отменить
+          Выйти без сохранения
         </Button>
       </div>
     </form>

@@ -5,7 +5,7 @@ import { ErrorPage } from '@/pages/error-page'
 import { MainPage } from '@/pages/main-page'
 import Cookies from 'js-cookie'
 
-import { AddPostPage } from './pages/addPost-page'
+import { AddEditPostPage } from './pages/add-edit-Post-page'
 import { BioPage } from './pages/bio-page '
 import { ConceptPage } from './pages/concept-page'
 import { EditProfilePage } from './pages/editProfile-page'
@@ -31,8 +31,8 @@ const publicRoutes: RouteObject[] = [
 ]
 const privateRoutes: RouteObject[] = [
   { element: <div> ProfilePage</div>, path: '/my-profile' },
-  { element: <AddPostPage />, path: '/add-post' },
-  { element: <AddPostPage />, path: '/edit-post/:postId' },
+  { element: <AddEditPostPage />, path: '/add-post' },
+  { element: <AddEditPostPage />, path: '/edit-post/:postId' },
   { element: <EditProfilePage />, path: '/edit-profile' },
   { element: <SavedPage />, path: '/saved' },
 ]

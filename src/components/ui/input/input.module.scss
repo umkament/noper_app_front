@@ -17,8 +17,9 @@
 
   .eyeIcon {
     position: absolute;
-    top: 0.48rem;
-    left: 16.6rem;
+    top: 50%; /* Центрируем иконку вертикально */
+    right: 6px; /* Привязываем к правому краю */
+    transform: translateY(-50%); /* Центрирование */
   }
 
   .xMarkIcon {
@@ -41,6 +42,12 @@
 
     background-repeat: no-repeat;
     border-radius: 5px;
+
+    &::placeholder {
+      @media (width <= 440px) {
+        font-size: var(--font-size-xs);
+      }
+    }
 
     &[type='search'] {
       padding-left: 40px;

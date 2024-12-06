@@ -9,6 +9,10 @@
   margin: 0 auto;
   margin-bottom: 6rem;
   padding-top: 110px;
+
+  @media (width <= 880px) {
+    width: calc(100% - 4rem); /* Отступы справа и слева */
+  }
 }
 
 .card {

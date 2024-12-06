@@ -71,8 +71,13 @@
 }
 
 .text {
+  overflow-x: hidden; /* Убираем горизонтальную прокрутку */
+
   width: 94%;
+
   color: var(--color-light-900) !important;
+  word-wrap: break-word; /* Предотвращает выход слов за пределы */
+  overflow-wrap: break-word; /* Альтернативная поддержка для переноса текста */
 }
 
 .tags {
