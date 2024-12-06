@@ -35,7 +35,7 @@
   }
 
   .usersContainer {
-    padding-top: 160px;
+    padding-top: 170px;
   }
 
   .rightContainer {
@@ -49,14 +49,13 @@
 
     .fixed {
       position: fixed;
-      top: 113px; /* отступ под хидером */
-      right: auto;
+      top: 113px;
       left: 50%;
       transform: translateX(-50%);
 
       display: flex;
       flex-direction: row;
-      gap: 0.5rem; /* отступы между кнопками */
+      gap: 0.4rem; /* отступы между кнопками */
     }
   }
 }
