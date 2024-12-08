@@ -106,11 +106,9 @@ export const UserPageContent: React.FC<UserProps> = ({ posts, user, userId }) =>
           >
             {user.description}
           </Typography>
-          {isCurrentUser && (
-            <Typography as={Link} className={s.link} to={`${user.link}`} variant={'link1'}>
-              {user.link}
-            </Typography>
-          )}
+          <Typography as={Link} className={s.link} to={`${user.link}`} variant={'link1'}>
+            {user.link}
+          </Typography>
         </div>
       </div>
       {isCurrentUser && (

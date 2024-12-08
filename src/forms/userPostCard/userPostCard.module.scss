@@ -78,9 +78,15 @@
       align-items: end;
 
       .userName {
+        overflow: hidden; /* Обрезаем лишний текст */
+
+        max-width: 15ch; /* Ограничиваем длину текста до 9 символов */
         margin-left: 1rem;
+
         font-size: 1.4rem;
         color: var(--color-light-700);
+        text-overflow: ellipsis; /* Добавляем многоточие */
+        white-space: nowrap; /* Запрещаем перенос текста на новую строку */
       }
     }
 
