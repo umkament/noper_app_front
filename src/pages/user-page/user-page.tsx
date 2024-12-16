@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 
-import postImg from '@/assets/userPhoto.jpg'
+import postImg from '@/assets/userPhoto.jpeg'
 import { Button } from '@/components/ui/button'
 import { Typography } from '@/components/ui/typography'
 import { useAuthMeQuery } from '@/services/auth'
@@ -90,7 +90,7 @@ export const UserPageContent: React.FC<UserProps> = ({ posts, user, userId }) =>
             className={s.imgStyle}
             src={
               user?.avatarUrl && user.avatarUrl.startsWith('/uploads/')
-                ? `http://localhost:4411${user.avatarUrl}` // Если путь относительный и начинается с /uploads/
+                ? `http://51.250.51.234:4411${user.avatarUrl}` // Если путь относительный и начинается с /uploads/
                 : user?.avatarUrl || `https://robohash.org/${user?.username}.png` // Если URL полный или не задан
             }
           />
@@ -139,7 +139,7 @@ export const UserPageContent: React.FC<UserProps> = ({ posts, user, userId }) =>
                 key={post._id}
                 src={
                   post?.imageUrl && post.imageUrl.startsWith('/uploads/')
-                    ? `http://localhost:4411${post.imageUrl}` // Если путь относительный и начинается с /uploads/
+                    ? `http://51.250.51.234:4411${post.imageUrl}` // Если путь относительный и начинается с /uploads/
                     : post.imageUrl || postImg
                 }
               />

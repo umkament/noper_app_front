@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { Link, useNavigate } from 'react-router-dom'
 
-import postImg from '@/assets/userPhoto.jpg'
+import postImg from '@/assets/userPhoto.jpeg'
 import { Avatar } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { SaveButton } from '@/components/ui/saveButton'
@@ -11,7 +11,6 @@ import { AddCommentForm } from '@/forms/addCommentForm/addCommentForm'
 import { CommentsList } from '@/forms/commentsList/commentslList'
 import {
   CommentInterface,
-  useCreateCommentMutation,
   useDeleteCommentMutation,
 } from '@/services/comment'
 import {
@@ -19,7 +18,6 @@ import {
   useDeletePostMutation,
   useGetPostLikeQuery,
   useTogglePostLikeMutation,
-  useUpdatePostMutation,
 } from '@/services/posts'
 import { UserInterface, useGetUserPostsQuery } from '@/services/users'
 import { BsBalloonHeartFill } from 'react-icons/bs'
@@ -32,7 +30,7 @@ import 'highlight.js/styles/github.css'
 import s from './post-page.module.scss'
 
 interface PostProps {
-  comments: CommentInterface[]
+  comments: CommentInterface[]|undefined
   commentsRefetch: () => void
   currentUser: UserInterface | null | undefined
   //onAddComment: (newComment: CommentInterface) => void
@@ -57,8 +55,7 @@ export const Post: React.FC<PostProps> = ({
   const [deletePost] = useDeletePostMutation()
 
   const [deleteComment, { error: deleteError, isLoading: isDeleting }] = useDeleteCommentMutation()
-  const [createComment] = useCreateCommentMutation()
-  const [updatedComments, setUpdatedComments] = useState(comments || [])
+  const [updatedComments, setUpdatedComments] = useState<CommentInterface[]>(comments || [])
   const navigate = useNavigate()
   const { refetch } = useGetUserPostsQuery(currentUser?._id || '')
 
@@ -89,7 +86,9 @@ export const Post: React.FC<PostProps> = ({
   }
 
   useEffect(() => {
-    setUpdatedComments(comments)
+    if (comments) {
+        setUpdatedComments(comments);
+      }
   }, [comments])
 
   const handleDeleteComment = async (commentId: string) => {
@@ -117,11 +116,11 @@ export const Post: React.FC<PostProps> = ({
 
   const avatarImage =
     post?.user.avatarUrl && post.user.avatarUrl.startsWith('/uploads/')
-      ? `http://localhost:4411${post.user.avatarUrl}` // Если путь относительный и начинается с /uploads/
+      ? `http://51.250.51.234:4411${post.user.avatarUrl}` // Если путь относительный и начинается с /uploads/
       : post.user.avatarUrl || `https://robohash.org/${post.user.username}.png`
   const postImage =
     post?.imageUrl && post.imageUrl.startsWith('/uploads/')
-      ? `http://localhost:4411${post.imageUrl}`
+      ? `http://51.250.51.234:4411${post.imageUrl}`
       : post.imageUrl || postImg
 
   return (

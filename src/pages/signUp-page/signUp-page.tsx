@@ -20,7 +20,7 @@ export const SignUpPage = () => {
     setError,
   } = useForm<SignUpFormSchema>({ resolver: zodResolver(signUpSchema) })
   const navigate = useNavigate()
-  const [registerUser, { isLoading }] = useRegisterUserMutation()
+  const [registerUser] = useRegisterUserMutation()
 
   const onSubmit = async (data: SignUpFormSchema) => {
     try {

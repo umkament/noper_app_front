@@ -33,9 +33,9 @@ export const AddEditPostPage = () => {
   const [createPost] = useCreatePostMutation()
   const [updatePost] = useUpdatePostMutation()
   const [uploadImage] = useUploadImageMutation()
-  const { data: post } = useGetPostQuery(postId, { skip: !postId })
+  const { data: post } = useGetPostQuery(postId!, { skip: !postId })
   const { data: user } = useAuthMeQuery()
-  const { data: userPosts, refetch } = useGetUserPostsQuery(user?._id || '')
+  const { refetch } = useGetUserPostsQuery(user?._id || '')
   const navigate = useNavigate()
 
   const [title, setTitle] = useState('')
@@ -81,7 +81,7 @@ export const AddEditPostPage = () => {
           // Подсвечиваем код в блоках <code> с помощью highlight.js
           const highlightedHtml = html.replace(
             /<pre><code class="([^"]+)">([\s\S]*?)<\/code><\/pre>/g,
-            (match: string, language: string, code: string) => {
+            (language: string, code: string) => {
               // Подсветка кода с помощью highlight.js
               const highlightedCode = hljs.highlightAuto(code).value
 

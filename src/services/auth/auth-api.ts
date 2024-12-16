@@ -3,9 +3,10 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { UserInterface } from '../users'
 import { UserProfile, UserProfileResponse } from './auth.type'
 
+
 export const authApi = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:4411',
+    baseUrl: import.meta.env.VITE_API_URL,
     credentials: 'include',
   }),
   endpoints: builder => {

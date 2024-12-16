@@ -2,8 +2,9 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 import { Saved, ToggleSavedRequest } from './saved.type'
 
+
 export const savedApi = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:4411', credentials: 'include' }),
+  baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_API_URL, credentials: 'include' }),
   endpoints: builder => ({
     // Типизация getSaved: возвращаемый массив объектов типа Saved
     getSaved: builder.query<Saved[], void>({

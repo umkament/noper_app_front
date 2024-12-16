@@ -15,7 +15,7 @@ export const SavedPage: React.FC = () => {
   const { data: savedData, error, isLoading, refetch } = useGetSavedQuery()
   const [toggleSaved, { isLoading: isToggling }] = useToggleSavedMutation()
   const { data: usersData, isFetching: isUsersLoading } = useGetUsersQuery()
-  const { data: postsData, isFetching: isPostsLoading } = useGetPostsQuery()
+  const { data: postsData } = useGetPostsQuery()
 
   // Обрабатываем сохраненных пользователей
   const savedUsers = (savedData || []).filter((item: Saved) => item.type === 'user')
@@ -61,7 +61,7 @@ export const SavedPage: React.FC = () => {
                       <Avatar
                         avatar={
                           userDetails?.avatarUrl
-                            ? `http://localhost:4411${userDetails.avatarUrl}`
+                            ? `http://51.250.51.234:4411${userDetails.avatarUrl}`
                             : `https://robohash.org/${userDetails?.username}.png`
                         }
                       />

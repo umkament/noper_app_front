@@ -3,9 +3,10 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { UserInterface } from '.'
 import { UserPostsResponce } from '../posts'
 
+
 export const usersApi = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:4411',
+    baseUrl: import.meta.env.VITE_API_URL,
     credentials: 'include',
   }),
   endpoints: builder => {
@@ -14,14 +15,14 @@ export const usersApi = createApi({
         query: userId => `/user/${userId}`,
       }),
       getUserLike: builder.query<{ likedByUser: boolean; likesCount: number }, { userId: string }>({
-        providesTags: (result, error, { userId }) => [{ id: userId, type: 'User' }],
+        providesTags: (_, __, { userId }) => [{ id: userId, type: 'User' }],
         query: ({ userId }) => ({
           params: { targetType: 'User' },
           url: `/likes/${userId}`,
         }),
       }),
       getUserPosts: builder.query<UserPostsResponce, string>({
-        providesTags: (result, error, userId) => {
+        providesTags: (result, _, userId) => {
           if (Array.isArray(result)) {
             // Если результат — массив постов
             return [
@@ -39,7 +40,7 @@ export const usersApi = createApi({
         query: () => `/users`,
       }),
       toggleUserLike: builder.mutation<void, { userId: string }>({
-        invalidatesTags: (result, error, { userId }) => [{ id: userId, type: 'User' }],
+        invalidatesTags: (_, __, { userId }) => [{ id: userId, type: 'User' }],
         query: ({ userId }) => ({
           body: { targetType: 'User' },
           method: 'POST',

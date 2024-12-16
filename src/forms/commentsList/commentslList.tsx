@@ -6,7 +6,6 @@ import { Typography } from '@/components/ui/typography'
 import {
   CommentInterface,
   useGetAllCommentLikesQuery,
-  useGetCommentLikeQuery,
   useToggleCommentLikeMutation,
 } from '@/services/comment'
 import { BsBalloonHeartFill } from 'react-icons/bs'
@@ -29,7 +28,7 @@ export const CommentsList: React.FC<CommentListType> = ({
   postAuthorId,
 }) => {
   const commentIds = comments?.map(comment => comment._id)
-  const { data: likesData, isLoading: likesLoading } = useGetAllCommentLikesQuery({
+  const { data: likesData } = useGetAllCommentLikesQuery({
     targetIds: commentIds,
     targetType: 'Comment',
   })
@@ -40,7 +39,7 @@ export const CommentsList: React.FC<CommentListType> = ({
       {comments && comments.length > 0 ? (
         comments.map(comment => {
           const avatarUrl = comment.user.avatarUrl?.startsWith('/uploads/')
-            ? `http://localhost:4411${comment.user.avatarUrl}`
+            ? `http://51.250.51.234:4411${comment.user.avatarUrl}`
             : comment.user.avatarUrl ||
               `https://robohash.org/${comment.user.username || 'unknown'}.png`
 

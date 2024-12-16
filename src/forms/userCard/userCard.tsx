@@ -1,14 +1,11 @@
 import React from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
 import { SaveButton } from '@/components/ui/saveButton'
 import { Typography } from '@/components/ui/typography'
 import { UserInterface, useGetUserLikeQuery, useToggleUserLikeMutation } from '@/services/users'
 import { BsBalloonHeartFill } from 'react-icons/bs'
-import { CiBookmarkPlus } from 'react-icons/ci'
-import { GiBinoculars } from 'react-icons/gi'
 import { PiHandHeartLight } from 'react-icons/pi'
 
 import s from './userCard.module.scss'
@@ -39,7 +36,7 @@ export const UserCard: React.FC<UserPostCardProps> = ({ user }) => {
           className={s.imgprof}
           src={
             user?.avatarUrl && user.avatarUrl.startsWith('/uploads/')
-              ? `http://localhost:4411${user.avatarUrl}` // Если путь относительный и начинается с /uploads/
+              ? `http://51.250.51.234:4411${user.avatarUrl}` // Если путь относительный и начинается с /uploads/
               : user?.avatarUrl || `https://robohash.org/${user?.username}.png` // Если URL полный или не задан
           }
         />
@@ -55,7 +52,7 @@ export const UserCard: React.FC<UserPostCardProps> = ({ user }) => {
         </Link>
         <div className={s.smllbtns}>
           <Typography className={s.saved}>
-            <SaveButton className={s.saved} itemId={user._id} type={'user'} />
+            <SaveButton itemId={user._id} type={'user'} />
           </Typography>
 
           <Button className={s.favorite} onClick={handleToggleLike} variant={'icon'}>

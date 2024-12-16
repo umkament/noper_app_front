@@ -1,7 +1,6 @@
 import { ChangeEvent, ComponentPropsWithoutRef, forwardRef } from 'react'
 
 import { Typography } from '@/components/ui/typography'
-import { FaXmark } from 'react-icons/fa6'
 
 import s from './textarea.module.scss'
 
@@ -54,9 +53,9 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       onEnter && e.key === 'Enter' && onEnter()
     }
 
-    const cleanTextHandler = () => {
-      onClearClick?.()
-    }
+    // const cleanTextHandler = () => {
+    //   onClearClick?.()
+    // }
 
     // const [showPassword, setShowPassword] = useState(false)
 

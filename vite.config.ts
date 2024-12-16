@@ -5,9 +5,10 @@ import { defineConfig } from 'vite'
 //import vitePluginSass from 'vite-plugin-sass'
 
 export default defineConfig({
-  base: '/roller_app_front/',
+  base: '/noper_app_front/',
   build: {
     outDir: 'dist',
+    chunkSizeWarningLimit: 3000, 
   },
   plugins: [react()],
   resolve: {

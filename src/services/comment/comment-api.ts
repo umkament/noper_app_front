@@ -1,10 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-import { CommentInterface, CreateCommentDto, GetCommentsByPostResponse } from './comment.type'
+import { CommentInterface, CreateCommentDto } from './comment.type'
+
 
 export const commentApi = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:4411',
+    baseUrl: import.meta.env.VITE_API_URL,
     credentials: 'include',
   }),
   endpoints: builder => {
@@ -24,10 +25,12 @@ export const commentApi = createApi({
       }),
       getAllCommentLikes: builder.query<
         Record<string, { likedByUser: boolean; likesCount: number }>,
-        { targetIds: string[]; targetType: string }
+        { targetIds: string[]|undefined; targetType: string }
       >({
-        providesTags: (result, error, { targetIds }) =>
-          targetIds.map(id => ({ id, type: 'CommentLikes' })),
+        providesTags: (_, __, { targetIds }) =>
+          targetIds
+            ? targetIds.map(id => ({ id, type: 'CommentLikes' }))
+            : [],
         query: ({ targetIds, targetType }) => ({
           body: { targetIds },
           method: 'POST',
@@ -39,7 +42,7 @@ export const commentApi = createApi({
         { likedByUser: boolean; likesCount: number },
         { commentId: string }
       >({
-        providesTags: (result, error, { commentId }) => [{ id: commentId, type: 'CommentLikes' }],
+        providesTags: (_, __, { commentId }) => [{ id: commentId, type: 'CommentLikes' }],
         query: ({ commentId }) => ({
           params: { targetType: 'Comment' },
           url: `/likes/${commentId}`,
@@ -50,7 +53,7 @@ export const commentApi = createApi({
         query: postId => `/comments/${postId}`,
       }),
       toggleCommentLike: builder.mutation<void, { commentId: string }>({
-        invalidatesTags: (result, error, { commentId }) => [
+        invalidatesTags: (_, __, { commentId }) => [
           { id: commentId, type: 'CommentLikes' },
         ],
         query: ({ commentId }) => ({

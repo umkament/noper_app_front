@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
-import postImg from '@/assets/userPhoto.jpg'
+import postImg from '@/assets/userPhoto.jpeg'
 import { Avatar } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
@@ -22,12 +22,12 @@ type UserPostCardProps = {
 export const UserPostCard: React.FC<UserPostCardProps> = ({ post }) => {
   const navigate = useNavigate()
   const skipQuery = !post._id
-  const { data: likesData, isLoading: likesLoading } = useGetPostLikeQuery(
+  const { data: likesData } = useGetPostLikeQuery(
     { postId: post._id! },
     { skip: skipQuery }
   )
   const [toggleLike] = useTogglePostLikeMutation()
-  const { data: user, isLoading } = useAuthMeQuery()
+  const { data: user } = useAuthMeQuery()
 
   const handleToggleLike = async () => {
     try {
@@ -48,11 +48,11 @@ export const UserPostCard: React.FC<UserPostCardProps> = ({ post }) => {
   }
   const avatarImage =
     post?.user.avatarUrl && post.user.avatarUrl.startsWith('/uploads/')
-      ? `http://localhost:4411${post.user.avatarUrl}` // Если путь относительный и начинается с /uploads/
+      ? `http://51.250.51.234:4411${post.user.avatarUrl}` // Если путь относительный и начинается с /uploads/
       : post.user.avatarUrl || `https://robohash.org/${post.user.username}.png`
   const postImage =
     post?.imageUrl && post.imageUrl.startsWith('/uploads/')
-      ? `http://localhost:4411${post.imageUrl}`
+      ? `http://51.250.51.234:4411${post.imageUrl}`
       : post.imageUrl || postImg
 
   return (

@@ -16,7 +16,7 @@ import {
 } from '@/services/auth'
 import { FaTrashCan } from 'react-icons/fa6'
 import { LiaHandPointer } from 'react-icons/lia'
-import { MdAddAPhoto, MdOutlineAddAPhoto } from 'react-icons/md'
+import { MdAddAPhoto } from 'react-icons/md'
 
 import s from './editProfile-page.module.scss'
 
@@ -36,7 +36,7 @@ export const EditProfilePage = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [avatarPreview, setAvatarPreview] = useState<string>(user?.avatarUrl || '')
 
-  const [updateUserProfile, { isError, isSuccess }] = useUpdateUserProfileMutation()
+  const [updateUserProfile ] = useUpdateUserProfileMutation()
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
       avatarUrl: user?.avatarUrl || '',
@@ -71,7 +71,7 @@ export const EditProfilePage = () => {
   const handleDeleteAvatar = async () => {
     try {
       await deleteAvatar().unwrap()
-      setAvatarPreview(null)
+      setAvatarPreview('')
       setSelectedFile(null)
       await refetch()
     } catch (err) {
@@ -116,7 +116,7 @@ export const EditProfilePage = () => {
     if (avatarPreview) {
       return avatarPreview.startsWith('blob')
         ? avatarPreview
-        : `http://localhost:4411${avatarPreview}`
+        : `http://51.250.51.234:4411${avatarPreview}`
     }
 
     return `https://robohash.org/${user?.username}.png`

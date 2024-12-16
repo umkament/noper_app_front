@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { Typography } from '@/components/ui/typography'
 import { useAuthMeQuery } from '@/services/auth'
-import { CommentInterface, useGetCommentsByPostQuery } from '@/services/comment'
+import { useGetCommentsByPostQuery } from '@/services/comment'
 import { useGetPostQuery } from '@/services/posts'
 import { skipToken } from '@reduxjs/toolkit/query/react'
 
@@ -32,8 +32,6 @@ export const PostPage = () => {
 
   const {
     data: commentsData,
-    error: commentsError,
-    isLoading: commentsLoading,
     refetch: commentsRefetch,
   } = useGetCommentsByPostQuery(postId ?? skipToken)
 

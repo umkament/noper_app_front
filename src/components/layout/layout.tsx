@@ -1,15 +1,14 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 
-import { NPlogo, logoUR } from '@/assets'
+import { NPlogo } from '@/assets'
 import { AvatarWithName } from '@/components/ui/avatar/avatarWithName'
 import { Button } from '@/components/ui/button'
 import { DropDownItem, DropDownMenu } from '@/components/ui/dropDownMenu'
 import { Header } from '@/components/ui/header'
 import { useAuthMeQuery, useLogoutUserMutation } from '@/services/auth'
 import { FaPeopleRobbery } from 'react-icons/fa6'
-import { GiNewspaper } from 'react-icons/gi'
-import { GiExitDoor } from 'react-icons/gi'
+import { GiExitDoor, GiNewspaper } from 'react-icons/gi'
 import { GoInfo } from 'react-icons/go'
 import { PiAtomLight } from 'react-icons/pi'
 
@@ -21,11 +20,7 @@ import { Typography } from '../ui/typography'
 export const Layout = () => {
   const [menuOpen, setMenuOpen] = useState(false)
 
-  const {
-    data: userData,
-    isLoading,
-    refetch,
-  } = useAuthMeQuery(undefined, {
+  const { data: userData, isLoading } = useAuthMeQuery(undefined, {
     pollingInterval: 60000,
   })
   const [logoutUser] = useLogoutUserMutation()
@@ -55,7 +50,7 @@ export const Layout = () => {
         <div className={s.header_body}>
           <Link to={'/'}>
             {/* <img alt={logoUR} className={s.logo} src={logoUR} /> */}
-            <img alt={logoUR} className={s.logo} src={NPlogo} />
+            <img alt={NPlogo} className={s.logo} src={NPlogo} />
           </Link>
           <nav className={s.header_nav}>
             <ul className={s.list_menu}>
@@ -105,7 +100,7 @@ export const Layout = () => {
                 <AvatarWithName
                   avatar={
                     userData?.avatarUrl
-                      ? `http://localhost:4411${userData.avatarUrl}`
+                      ? `http://51.250.51.234:4411L${userData.avatarUrl}`
                       : `https://robohash.org/${userData?.username}.png`
                   }
                   name={<Typography className={s.name}>{userData.username}</Typography>}
@@ -119,7 +114,7 @@ export const Layout = () => {
                     <Avatar
                       avatar={
                         userData?.avatarUrl
-                          ? `http://localhost:4411${userData.avatarUrl}`
+                          ? `http://51.250.51.234:4411${userData.avatarUrl}`
                           : `https://robohash.org/${userData?.username}.png`
                       }
                     />

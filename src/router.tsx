@@ -3,7 +3,7 @@ import { Navigate, Outlet, RouteObject, RouterProvider, createHashRouter } from 
 import { Layout } from '@/components/layout'
 import { ErrorPage } from '@/pages/error-page'
 import { MainPage } from '@/pages/main-page'
-import Cookies from 'js-cookie'
+
 
 import { AddEditPostPage } from './pages/add-edit-Post-page'
 import { BioPage } from './pages/bio-page '

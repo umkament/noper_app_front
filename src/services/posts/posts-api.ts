@@ -2,9 +2,10 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 import { PostInterface } from './posts.type'
 
+
 export const postsApi = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:4411',
+    baseUrl: import.meta.env.VITE_API_URL,
     credentials: 'include',
     // prepareHeaders: headers => {
     //   headers.append('x-auth-skip', 'true')
@@ -13,7 +14,7 @@ export const postsApi = createApi({
   endpoints: builder => {
     return {
       createPost: builder.mutation({
-        invalidatesTags: (result, error, { userId }) => [
+        invalidatesTags: (_, __, { userId }) => [
           { id: userId, type: 'UserPosts' }, // Указываем тег пользователя
         ],
         query: postData => {
@@ -26,7 +27,7 @@ export const postsApi = createApi({
       }),
       // Добавляем удаление статьи
       deletePost: builder.mutation<void, { postId: string; userId: string }>({
-        invalidatesTags: (result, error, { postId, userId }) => [
+        invalidatesTags: (_, __, { postId, userId }) => [
           { id: postId, type: 'Post' }, // Удаляем конкретный пост
           { id: userId, type: 'UserPosts' }, // Обновляем список постов пользователя
         ],
@@ -46,7 +47,7 @@ export const postsApi = createApi({
         query: postId => `/post/${postId}`,
       }),
       getPostLike: builder.query<{ likedByUser: boolean; likesCount: number }, { postId: string }>({
-        providesTags: (result, error, { postId }) => [{ id: postId, type: 'Post' }],
+        providesTags: (_, __, { postId }) => [{ id: postId, type: 'Post' }],
         query: ({ postId }) => ({
           params: { targetType: 'Post' },
           url: `/likes/${postId}`,
@@ -67,7 +68,7 @@ export const postsApi = createApi({
         query: tags => `/posts/search?tags=${tags.join(',')}`,
       }),
       togglePostLike: builder.mutation<void, { postId: string }>({
-        invalidatesTags: (result, error, { postId }) => [{ id: postId, type: 'Post' }],
+        invalidatesTags: (_, __, { postId }) => [{ id: postId, type: 'Post' }],
         query: ({ postId }) => ({
           body: { targetType: 'Post' },
           method: 'POST',
@@ -76,7 +77,7 @@ export const postsApi = createApi({
       }),
       // Добавляем редактирование статьи
       updatePost: builder.mutation<void, { data: Partial<PostInterface>; postId: string }>({
-        invalidatesTags: (result, error, { postId }) => [{ id: postId, type: 'Post' }],
+        invalidatesTags: (_, __, { postId }) => [{ id: postId, type: 'Post' }],
         query: ({ data, postId }) => ({
           body: data,
           method: 'PATCH',
