@@ -61,7 +61,7 @@ export const SavedPage: React.FC = () => {
                       <Avatar
                         avatar={
                           userDetails?.avatarUrl
-                            ? `http://51.250.51.234:4411${userDetails.avatarUrl}`
+                            ? `http://localhost:4411${userDetails.avatarUrl}`
                             : `https://robohash.org/${userDetails?.username}.png`
                         }
                       />

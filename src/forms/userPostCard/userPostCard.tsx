@@ -22,10 +22,7 @@ type UserPostCardProps = {
 export const UserPostCard: React.FC<UserPostCardProps> = ({ post }) => {
   const navigate = useNavigate()
   const skipQuery = !post._id
-  const { data: likesData } = useGetPostLikeQuery(
-    { postId: post._id! },
-    { skip: skipQuery }
-  )
+  const { data: likesData } = useGetPostLikeQuery({ postId: post._id! }, { skip: skipQuery })
   const [toggleLike] = useTogglePostLikeMutation()
   const { data: user } = useAuthMeQuery()
 
@@ -48,11 +45,11 @@ export const UserPostCard: React.FC<UserPostCardProps> = ({ post }) => {
   }
   const avatarImage =
     post?.user.avatarUrl && post.user.avatarUrl.startsWith('/uploads/')
-      ? `http://51.250.51.234:4411${post.user.avatarUrl}` // Если путь относительный и начинается с /uploads/
+      ? `http://localhost:4411${post.user.avatarUrl}` // Если путь относительный и начинается с /uploads/
       : post.user.avatarUrl || `https://robohash.org/${post.user.username}.png`
   const postImage =
     post?.imageUrl && post.imageUrl.startsWith('/uploads/')
-      ? `http://51.250.51.234:4411${post.imageUrl}`
+      ? `http://localhost:4411${post.imageUrl}`
       : post.imageUrl || postImg
 
   return (

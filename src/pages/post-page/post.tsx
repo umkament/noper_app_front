@@ -9,10 +9,7 @@ import { SaveButton } from '@/components/ui/saveButton'
 import { Typography } from '@/components/ui/typography'
 import { AddCommentForm } from '@/forms/addCommentForm/addCommentForm'
 import { CommentsList } from '@/forms/commentsList/commentslList'
-import {
-  CommentInterface,
-  useDeleteCommentMutation,
-} from '@/services/comment'
+import { CommentInterface, useDeleteCommentMutation } from '@/services/comment'
 import {
   PostInterface,
   useDeletePostMutation,
@@ -30,7 +27,7 @@ import 'highlight.js/styles/github.css'
 import s from './post-page.module.scss'
 
 interface PostProps {
-  comments: CommentInterface[]|undefined
+  comments: CommentInterface[] | undefined
   commentsRefetch: () => void
   currentUser: UserInterface | null | undefined
   //onAddComment: (newComment: CommentInterface) => void
@@ -87,8 +84,8 @@ export const Post: React.FC<PostProps> = ({
 
   useEffect(() => {
     if (comments) {
-        setUpdatedComments(comments);
-      }
+      setUpdatedComments(comments)
+    }
   }, [comments])
 
   const handleDeleteComment = async (commentId: string) => {
@@ -116,11 +113,11 @@ export const Post: React.FC<PostProps> = ({
 
   const avatarImage =
     post?.user.avatarUrl && post.user.avatarUrl.startsWith('/uploads/')
-      ? `http://51.250.51.234:4411${post.user.avatarUrl}` // Если путь относительный и начинается с /uploads/
+      ? `http://localhost:4411${post.user.avatarUrl}` // Если путь относительный и начинается с /uploads/
       : post.user.avatarUrl || `https://robohash.org/${post.user.username}.png`
   const postImage =
     post?.imageUrl && post.imageUrl.startsWith('/uploads/')
-      ? `http://51.250.51.234:4411${post.imageUrl}`
+      ? `http://localhost:4411${post.imageUrl}`
       : post.imageUrl || postImg
 
   return (

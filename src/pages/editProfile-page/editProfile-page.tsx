@@ -36,7 +36,7 @@ export const EditProfilePage = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [avatarPreview, setAvatarPreview] = useState<string>(user?.avatarUrl || '')
 
-  const [updateUserProfile ] = useUpdateUserProfileMutation()
+  const [updateUserProfile] = useUpdateUserProfileMutation()
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
       avatarUrl: user?.avatarUrl || '',
@@ -116,7 +116,7 @@ export const EditProfilePage = () => {
     if (avatarPreview) {
       return avatarPreview.startsWith('blob')
         ? avatarPreview
-        : `http://51.250.51.234:4411${avatarPreview}`
+        : `http://localhost:4411${avatarPreview}`
     }
 
     return `https://robohash.org/${user?.username}.png`
